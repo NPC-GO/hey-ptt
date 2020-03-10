@@ -1,4 +1,5 @@
 @import url(./bootstrap.css);
+@import url(./homepage/index.css);
 html,
 body {
   background-color: #f9f9f9;
@@ -32,66 +33,4 @@ body {
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 1px #000000, 1px 1px 1px #000000;
   font-size: 10em;
-}
-
-.github-btn-primary {
-  color: #fff;
-  background-color: #28a745;
-  background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
-}
-
-.github-btn:hover {
-  text-decoration: none;
-  background-repeat: repeat-x;
-}
-
-.github-btn-primary.hover,
-.github-btn-primary:hover {
-  background-color: #269f42;
-  background-image: linear-gradient(-180deg, #2fcb53, #269f42 90%);
-  background-position: -0.5em;
-  border-color: rgba(27, 31, 35, 0.5);
-}
-
-.github-btn-primary.selected,
-.github-btn-primary:active,
-.github-btn-primary[aria-selected="true"],
-[open] > .github-btn-primary {
-  background-color: #279f43;
-  background-image: none;
-  border-color: rgba(27, 31, 35, 0.5);
-  box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
-}
-
-.github-btn {
-  left: 50%;
-  transform: translate(-50%, 0);
-  position: relative;
-  display: inline-block;
-  padding: 12px 32px;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 20px;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-repeat: repeat-x;
-  background-position: -1px -1px;
-  background-size: 110% 110%;
-  border: 1px solid rgba(27, 31, 35, 0.2);
-  border-radius: 0.25em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.form-body {
-  padding: 20px;
-  font-size: 14px;
-  background-color: #fff;
-  border-radius: 7px;
 }
