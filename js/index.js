@@ -13,10 +13,11 @@ function fade(element) {
     }, 50);
 }
 
+
 function beforeLoaded() {
     let homePageTitle = document.getElementById("home-page-button");
     homePageTitle.addEventListener("click", function () {
-        fade(this)
+        api.request();
     });
 }
 
