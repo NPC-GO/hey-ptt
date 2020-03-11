@@ -1,5 +1,9 @@
+/* css framwork */
 @import url(./bootstrap.css);
-@import url(./homepage/index.css);
+/* Components */
+@import url(./components/index.css);
+/* Layout */
+@import url("./layout/index.css");
 html,
 body {
   background-color: #f9f9f9;
@@ -12,25 +16,4 @@ body {
   word-wrap: break-word;
 }
 
-.text-center {
-  text-align: center;
-}
 
-.github-text {
-  color: #333333 !important;
-}
-
-.middle-center {
-  margin: 0;
-  position: relative;
-  top: 50%;
-  -ms-transform: translate(0%, -50%);
-  transform: translate(0, -50%);
-}
-
-.page-title {
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 1px 1px #000000, 1px 1px 1px #000000;
-  font-size: 10em;
-}
