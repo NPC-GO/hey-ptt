@@ -6,7 +6,7 @@
   transform: translate(0, -50%);
 }
 
-.horizonal-center {
+.horizontal-center {
   left: 50%;
   transform: translate(-50%, 0);
   position: relative;
