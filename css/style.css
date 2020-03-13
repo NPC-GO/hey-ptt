@@ -1,97 +1,94 @@
-@import url(./bootstrap.css);
+/* Components */
+@import url(./components/index.css);
+/* Layout */
+@import url("./layout/index.css");
 html,
 body {
   background-color: #f9f9f9;
   font-family: Arial, Helvetica, sans-serif;
-  background-repeat: round;
   width: inherit;
   height: 100%;
   margin: 0;
   padding: 0;
   word-wrap: break-word;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.github-text {
-  color: #333333 !important;
-}
-
-.middle-center {
-  margin: 0;
-  position: relative;
-  top: 50%;
-  -ms-transform: translate(0%, -50%);
-  transform: translate(0, -50%);
-}
-
-.page-title {
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 1px 1px #000000, 1px 1px 1px #000000;
-  font-size: 10em;
-}
-
-.github-btn-primary {
-  color: #fff;
-  background-color: #28a745;
-  background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
-}
-
-.github-btn:hover {
-  text-decoration: none;
-  background-repeat: repeat-x;
-}
-
-.github-btn-primary.hover,
-.github-btn-primary:hover {
-  background-color: #269f42;
-  background-image: linear-gradient(-180deg, #2fcb53, #269f42 90%);
-  background-position: -0.5em;
-  border-color: rgba(27, 31, 35, 0.5);
-}
-
-.github-btn-primary.selected,
-.github-btn-primary:active,
-.github-btn-primary[aria-selected="true"],
-[open] > .github-btn-primary {
-  background-color: #279f43;
-  background-image: none;
-  border-color: rgba(27, 31, 35, 0.5);
-  box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
-}
-
-.github-btn {
-  left: 50%;
-  transform: translate(-50%, 0);
-  position: relative;
-  display: inline-block;
-  padding: 12px 32px;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 20px;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-repeat: repeat-x;
-  background-position: -1px -1px;
-  background-size: 110% 110%;
-  border: 1px solid rgba(27, 31, 35, 0.2);
-  border-radius: 0.25em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.form-body {
-  padding: 20px;
-  font-size: 14px;
-  background-color: #fff;
-  border-radius: 7px;
+  background-color: silver;
+  background-image: radial-gradient(
+      circle at 100% 150%,
+      silver 24%,
+      white 24%,
+      white 28%,
+      silver 28%,
+      silver 36%,
+      white 36%,
+      white 40%,
+      transparent 40%,
+      transparent
+    ),
+    radial-gradient(
+      circle at 0 150%,
+      silver 24%,
+      white 24%,
+      white 28%,
+      silver 28%,
+      silver 36%,
+      white 36%,
+      white 40%,
+      transparent 40%,
+      transparent
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      white 10%,
+      silver 10%,
+      silver 23%,
+      white 23%,
+      white 30%,
+      silver 30%,
+      silver 43%,
+      white 43%,
+      white 50%,
+      silver 50%,
+      silver 63%,
+      white 63%,
+      white 71%,
+      transparent 71%,
+      transparent
+    ),
+    radial-gradient(
+      circle at 100% 50%,
+      white 5%,
+      silver 5%,
+      silver 15%,
+      white 15%,
+      white 20%,
+      silver 20%,
+      silver 29%,
+      white 29%,
+      white 34%,
+      silver 34%,
+      silver 44%,
+      white 44%,
+      white 49%,
+      transparent 49%,
+      transparent
+    ),
+    radial-gradient(
+      circle at 0 50%,
+      white 5%,
+      silver 5%,
+      silver 15%,
+      white 15%,
+      white 20%,
+      silver 20%,
+      silver 29%,
+      white 29%,
+      white 34%,
+      silver 34%,
+      silver 44%,
+      white 44%,
+      white 49%,
+      transparent 49%,
+      transparent
+    );
+  background-size: 100px 50px;
 }
