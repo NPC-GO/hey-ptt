@@ -1,28 +1,48 @@
-from flask import Flask
-from .crawler import *
+from flask import Flask, send_from_directory
+import crawler as cra
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='..', static_url_path='')
 app.config['JSON_AS_ASCII'] = False
+
+
+@app.route('/')
+def give_html():
+    return app.send_static_file('index.html')
+
+
+@app.route('/js/<path:path>')
+def give_js(path):
+    return send_from_directory('../js', path)
+
+
+@app.route('/css/<path:path>')
+def give_css(path):
+    return send_from_directory('../css', path)
+
+
+@app.route('/images/<path:path>')
+def give_images(path):
+    return send_from_directory('images', path)
 
 
 @app.route('/api/article/<article_id>')
 def article_info(article_id):
-    return get_article(article_id)
+    return cra.get_article(article_id)
 
 
 @app.route('/api/article/<article_id>/content')
 def article_content(article_id):
-    return get_article(article_id, True)
+    return cra.get_article(article_id, True)
 
 
 @app.route('/api/article_list/<int:page>')
 def article_ids(page):
-    return get_article_ids(page)
+    return cra.get_article_ids(page)
 
 
 @app.route('/api/article_list/')
 def latest_page_article_ids():
-    return get_article_ids("")
+    return cra.get_article_ids("")
 
 
 if __name__ == '__main__':
