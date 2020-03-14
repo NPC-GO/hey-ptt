@@ -1,7 +1,7 @@
 from flask import Flask, send_from_directory
 import crawler as cra
 
-app = Flask(__name__, static_folder='..', static_url_path='')
+app = Flask(__name__, static_folder='dist', static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 
@@ -10,19 +10,9 @@ def give_html():
     return app.send_static_file('index.html')
 
 
-@app.route('/js/<path:path>')
+@app.route('/<path:path>')
 def give_js(path):
-    return send_from_directory('../js', path)
-
-
-@app.route('/css/<path:path>')
-def give_css(path):
-    return send_from_directory('../css', path)
-
-
-@app.route('/images/<path:path>')
-def give_images(path):
-    return send_from_directory('images', path)
+    return send_from_directory('dist', path)
 
 
 @app.route('/api/article/<article_id>')
