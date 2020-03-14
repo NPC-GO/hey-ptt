@@ -2,28 +2,28 @@
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="css/default.css"/>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <title>Hey PTT</title>
+  <meta charset="UTF-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="css/default.css" rel="stylesheet" type="text/css"/>
+  <link href="css/style.css" rel="stylesheet" type="text/css"/>
+  <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+  <title>Hey PTT</title>
 </head>
 
 <body>
 <div class="middle-center big-white-form-div mx-3 my-3 py-5 px-5">
-    <h1 id="home-page-title" class="text-center page-title github-text my-5">Hey! PTT</h1>
-    <div id="home-page-buttons" class="horizontal-center tide-box px-3 py-3 d-flex flex-wrap justify-content-center">
-        <button id="latest-post-button" type="button" class=" github-btn github-btn-green my-2 mx-1 text-center">Latest
-            post
-        </button>
-        <button id="self-post-id-button" type="button" class="github-btn github-btn-regular my-2 mx-1 text-center">
-            Select
-            article by ID
-        </button>
-    </div>
+  <h1 class="text-center page-title github-text my-5" id="home-page-title">Hey! PTT</h1>
+  <div class="horizontal-center tide-box px-3 py-3 d-flex flex-wrap justify-content-center" id="home-page-buttons">
+    <button class=" github-btn github-btn-green my-2 mx-1 text-center" id="latest-post-button" type="button">Latest
+                                                                                                             post
+    </button>
+    <button class="github-btn github-btn-regular my-2 mx-1 text-center" id="self-post-id-button" type="button">
+      Select
+      article by ID
+    </button>
+  </div>
 </div>
 <script src="js/index.js"></script>
 <script src="js/api.js"></script>
