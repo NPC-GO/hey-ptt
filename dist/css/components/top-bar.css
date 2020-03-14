@@ -1,0 +1,39 @@
+.top-bar {
+    border-radius: 0 50px 50px 0;
+    background-color: #000000;
+    box-shadow: 4px 1px 5px 0 #202326;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000000, 1px 1px 1px #000000;
+    font-size: 40px;
+    z-index: 999;
+    transition: 0.3s;
+    cursor: default;
+    overflow-x: hidden;
+    position: fixed;
+    opacity: 0.4;
+    visibility: hidden;
+}
+
+.top-bar:hover {
+    box-shadow: inset 4px 1px 5px 0 #202326;
+    background-color: #d39e00;
+    opacity: 1;
+    width: max-content;
+}
+
+@media screen and (max-width: 600px) {
+    .top-bar {
+        font-size: 20px;
+    }
+    #latest-post-button-nav{
+        font-size: 15px;
+        line-height: 2px;
+        padding: 10px 2px 10px 2px;
+    }
+    #self-post-id-button-nav{
+        font-size: 15px;
+        line-height: 2px;
+        padding: 10px 2px 10px 2px;
+    }
+}

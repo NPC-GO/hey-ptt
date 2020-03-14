@@ -92,3 +92,7 @@ body {
     );
     background-size: 100px 50px;
 }
+
+#title-container {
+    transition: 0.5s;
+}
