@@ -5,12 +5,12 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 
-@app.route('/api/article/<int:article_id>')
+@app.route('/api/article/<article_id>')
 def article_info(article_id):
     return get_article(article_id)
 
 
-@app.route('/api/article/<int:article_id>/content')
+@app.route('/api/article/<article_id>/content')
 def article_content(article_id):
     return get_article(article_id, True)
 
