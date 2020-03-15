@@ -96,3 +96,7 @@ body {
 #title-container {
     transition: 0.5s;
 }
+
+#main-container{
+    transition: 0.5s;
+}

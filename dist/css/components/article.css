@@ -1,0 +1,13 @@
+#article-title-container{
+    justify-content: space-between;
+}
+
+#article-title{
+    bottom: 0;
+    align-self: end;
+}
+
+#article-time{
+    bottom: 0;
+    align-self: end;
+}

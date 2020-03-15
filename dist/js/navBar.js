@@ -2,7 +2,7 @@ function getNavBarProperties() {
   let navBar = document.getElementById("navBar");
   let navText = document.getElementById("nav-text");
   let navTextStyle = window.getComputedStyle(navText);
-  let navTextWidth = (Number(navTextStyle.getPropertyValue('width').slice(0, -2)) * 1.26).toString() + "px";
+  let navTextWidth = (Number(navTextStyle.getPropertyValue('width').slice(0, -2)) * 2.5).toString() + "px";
   navBar.style.width = "max-content";
   let navBarWidth = window.getComputedStyle(navBar).getPropertyValue('width');
   navBar.style.width = navTextWidth;
