@@ -25,10 +25,13 @@ async function getLatestArticle() {
     const latestArticle = await request("/api/article/" + latestId + "/content", 'GET');
     const articleTitle = document.getElementById("article-title");
     const articleTime = document.getElementById("article-time");
+    const articleAuthor = document.getElementById("article-author");
     const articleContent = document.getElementById("article-content");
     articleTitle.innerText = latestArticle["title"];
     articleTime.innerText = latestArticle["time"];
+    articleAuthor.innerText = latestArticle["author"];
     articleContent.innerText = latestArticle["content"];
+    articleTime.innerHTML += "<span class=\"badge badge-success mx-2\">Latest</span>";
   }
 }
 
@@ -65,9 +68,12 @@ let mainContainer = document.getElementById("main-container");
   let latestPostButton = document.getElementById("latest-post-button");
   //white button
   let selfPostIdButton = document.getElementById("self-post-id-button");
+  //green button in nav bar
+  let latestPostButtonNav = document.getElementById("latest-post-button-nav");
   //add a event listener to the button.
   latestPostButton.addEventListener("click", firstClick);
   latestPostButton.addEventListener("click", getLatestArticle);
+  latestPostButtonNav.addEventListener("click", getLatestArticle);
   //add a event listener to the button.
   selfPostIdButton.addEventListener("click", firstClick);
 }());
