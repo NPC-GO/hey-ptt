@@ -1,8 +1,27 @@
+let mainContainer = document.getElementById("main-container");
+let articleContainer = document.getElementById("article-container");
+(function () {
+  articleContainer.parentNode.removeChild(articleContainer);
+  mainContainer.parentNode.removeChild(mainContainer);
+  //green button
+  let latestPostButton = document.getElementById("latest-post-button");
+  //white button
+  let selfPostIdButton = document.getElementById("self-post-id-button");
+  //green button in nav bar
+  let latestPostButtonNav = document.getElementById("latest-post-button-nav");
+  //add a event listener to the button.
+  latestPostButton.addEventListener("click", firstClick);
+  latestPostButton.addEventListener("click", getLatestArticle);
+  latestPostButtonNav.addEventListener("click", getLatestArticle);
+  //add a event listener to the button.
+  selfPostIdButton.addEventListener("click", firstClick);
+}());
+
 function request(url, method, ...header) {
   return new Promise(function (resolve, reject) {
     let httpRequest = new XMLHttpRequest();
     httpRequest.open(method, url);
-    header.forEach(h => httpRequest.setRequestHeader(h.key, h.val));
+    header.forEach(h => httpRequest.setRequestHeader(h.key, h.value));
     httpRequest.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 200) {
@@ -17,16 +36,21 @@ function request(url, method, ...header) {
 }
 
 async function getLatestArticle() {
-  const article = await request("/api/article_list/", 'GET');
-  const latestId = article["articles"].slice(-1)[0];
+  mainContainer.innerHTML = '';
+  let article = await request("/api/article_list/", 'GET');
+  let latestId = article["articles"][0];
   if (latestId === undefined) {
-
+    let articleTitle = document.getElementById("article-title");
+    let articleContent = document.getElementById("article-content");
+    articleTitle.innerText = "Something went wrong, we can't get anything...";
+    articleContent.innerText = "Nothing here ~ ";
   } else {
-    const latestArticle = await request("/api/article/" + latestId + "/content", 'GET');
-    const articleTitle = document.getElementById("article-title");
-    const articleTime = document.getElementById("article-time");
-    const articleAuthor = document.getElementById("article-author");
-    const articleContent = document.getElementById("article-content");
+    mainContainer.appendChild(articleContainer);
+    let latestArticle = await request("/api/article/" + latestId + "/content", 'GET');
+    let articleTitle = document.getElementById("article-title");
+    let articleContent = document.getElementById("article-content");
+    let articleTime = document.getElementById("article-time");
+    let articleAuthor = document.getElementById("article-author");
     articleTitle.innerText = latestArticle["title"];
     articleTime.innerText = latestArticle["time"];
     articleAuthor.innerText = latestArticle["author"];
@@ -50,30 +74,9 @@ function firstClick() {
   //set navigation drawer to be seen.
   navBar.style.visibility = "visible";
   //make title div to transparent.
-  //Notice! we added a "transition" css property of this div, so it will disappear after 0.5s.
   titleContainer.style.opacity = "0";
-  setTimeout(function () {
-    //after "approximately" 500ms (0.5s), browser will execute this. Think: 0.5s, really? why not?
-    //Really remove this title div element.
-    let body = titleContainer.parentNode;
-    body.removeChild(titleContainer);
-    body.appendChild(mainContainer);
-  }, 500);
+  //Really remove this title div element.
+  let body = titleContainer.parentNode;
+  body.removeChild(titleContainer);
+  body.appendChild(mainContainer);
 }
-
-let mainContainer = document.getElementById("main-container");
-(function () {
-  mainContainer.parentNode.removeChild(mainContainer);
-  //green button
-  let latestPostButton = document.getElementById("latest-post-button");
-  //white button
-  let selfPostIdButton = document.getElementById("self-post-id-button");
-  //green button in nav bar
-  let latestPostButtonNav = document.getElementById("latest-post-button-nav");
-  //add a event listener to the button.
-  latestPostButton.addEventListener("click", firstClick);
-  latestPostButton.addEventListener("click", getLatestArticle);
-  latestPostButtonNav.addEventListener("click", getLatestArticle);
-  //add a event listener to the button.
-  selfPostIdButton.addEventListener("click", firstClick);
-}());
