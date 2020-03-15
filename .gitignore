@@ -2,3 +2,5 @@
 .DS_Stor
 .idea
 __pycache__
+build
+*.egg-info

@@ -32,7 +32,7 @@ def article_ids(page):
 
 @app.route('/api/article_list/')
 def latest_page_article_ids():
-    return cra.get_article_ids("")
+    return cra.get_article_ids()
 
 
 if __name__ == '__main__':
