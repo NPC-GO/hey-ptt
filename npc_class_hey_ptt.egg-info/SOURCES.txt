@@ -1,6 +1,0 @@
-README.md
-setup.py
-npc_class_hey_ptt.egg-info/PKG-INFO
-npc_class_hey_ptt.egg-info/SOURCES.txt
-npc_class_hey_ptt.egg-info/dependency_links.txt
-npc_class_hey_ptt.egg-info/top_level.txt
