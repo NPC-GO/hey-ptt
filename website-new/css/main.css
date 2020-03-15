@@ -1,0 +1,205 @@
+@import url("./button.css");
+
+@keyframes animateTop {
+    from {
+        top: -1000px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+#main-container {
+    margin: 5% 5%;
+    justify-content: center;
+}
+
+#main-container .main-text {
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 20px 0 10px 0;
+}
+
+#main-container .colorful-line {
+    height: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin: 10px 0;
+    background: linear-gradient(to top right, #003377, #00aaaa);
+}
+
+#load-more-button {
+    margin: 20px auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+
+#board-name {
+    font-size: small;
+    font-style: italic;
+}
+
+#list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+    justify-content: space-evenly;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    width: 95%;
+}
+
+#list .article-card {
+    width: 250px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    transition: 0.5s;
+    border-style: solid;
+    border-width: medium;
+    border-color: #003377;
+}
+
+#list .article-card:hover {
+    box-shadow: 5px 5px 7px #000000;
+    border-color: #00aaaa;
+    transform: scale(1.1);
+}
+
+#list .article-card:active {
+    box-shadow: inset 5px 5px 7px #000000;
+    border-color: #003333;
+    background-color: #dcdcdc;
+}
+
+#list .article-card .article-card-title:hover {
+    color: #00aaaa;
+}
+
+#list .article-card-title {
+    font-size: large;
+    color: #003377;
+    font-weight: bold;
+    line-height: normal;
+}
+
+#list .article-card-author {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+#list .article-card-time {
+    margin: 0 0 5px 0;
+    font-size: small;
+}
+
+#main-title {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+#page-title {
+    background-color: white;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+}
+
+
+#article-container {
+    display: none;
+    z-index: 9998;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+}
+
+#article-container .content {
+    background-color: #fefefe;
+    position: relative;
+    margin: 20px auto;
+    padding: 0 0 20px;
+    width: 80%;
+    height: 90%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    animation-name: animateTop;
+    animation-duration: 0.5s;
+    overflow: scroll;
+}
+
+#article-container .close {
+    position: relative;
+    display: inline-block;
+    color: #aaa;
+    float: right;
+    padding: 0 10px 0;
+    font-size: 45px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#article-container .close:hover,
+#article-container .close:focus {
+    color: red;
+    text-decoration: none;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+#article-container .close:active {
+    color: darkred;
+    transform: scale(0.9);
+}
+
+#article-container .title-text {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0 10px 10px;
+    padding: 10px 0 0;
+}
+
+@media screen and (max-width: 1000px) {
+    #article-container .title-text {
+        font-size: 2em;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #article-container .title-text {
+        font-size: 1.5em;
+    }
+}
+
+#article-container .title {
+    top: 0;
+    position: sticky;
+    position: -webkit-sticky;
+    background-color: white;
+    line-height: 1.5;
+}
+
+#article-container .article {
+    line-height: 2.5;
+    font-size: large;
+    margin: 30px;
+    word-wrap: break-word;
+}

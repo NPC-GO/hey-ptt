@@ -12,11 +12,12 @@ def get_last_session_of_url(url):
 
 
 def get_article(id_, is_include_content=False):
-    url = 'https://www.ptt.cc/bbs/joke/' + id_ + '.html'
+    url = 'https://www.ptt.cc/bbs/Gossiping/' + id_ + '.html'
 
     # 以 GET 傳請求給目標伺服器，伺服器回傳 response 物件
     # response 接收回傳值
-    response = requests.get(url)
+    cookies = dict({"over18": "1"})
+    response = requests.get(url, cookies=cookies)
 
     # 以 html.parser 為解析器解析 response.text 中的內容 存入 soup 中
     # response.text 為網頁原始碼
@@ -47,8 +48,9 @@ def get_article(id_, is_include_content=False):
 
 def get_article_ids(page=""):
     # format 中的內容會替換 {} 所在的位置
-    url = 'https://www.ptt.cc/bbs/joke/index{}.html'.format(page)
-    response = requests.get(url)
+    url = 'https://www.ptt.cc/bbs/Gossiping/index{}.html'.format(page)
+    cookies = dict({"over18": "1"})
+    response = requests.get(url, cookies=cookies)
     if response.status_code == 200:
         # 搜尋所有標籤為 div 且 class 為 r-ent 的目標
         # class_ 是因為避免和保留字 class 衝突
