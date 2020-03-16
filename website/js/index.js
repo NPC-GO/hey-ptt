@@ -1,5 +1,6 @@
 let mainContainer = document.getElementById("main-container");
 let articleContainer = document.getElementById("article-container");
+let articleListContainer = document.getElementById("article-list-container");
 (function () {
   articleContainer.parentNode.removeChild(articleContainer);
   mainContainer.parentNode.removeChild(mainContainer);
@@ -9,14 +10,24 @@ let articleContainer = document.getElementById("article-container");
   let selfPostIdButton = document.getElementById("self-post-id-button");
   //green button in nav bar
   let latestPostButtonNav = document.getElementById("latest-post-button-nav");
+  //white button in nav bar
+  let selfPostIdButtonNav = document.getElementById("self-post-id-button-nav");
   //add a event listener to the button.
   latestPostButton.addEventListener("click", async function () {
     await showMainLayout();
-    await getLatestArticle();
+    await showArticle(await getLatestArticleId());
   });
-  latestPostButtonNav.addEventListener("click", getLatestArticle);
+  latestPostButtonNav.addEventListener("click", async function () {
+    await showArticle(await getLatestArticleId());
+  });
   //add a event listener to the button.
-  selfPostIdButton.addEventListener("click", showMainLayout);
+  selfPostIdButton.addEventListener("click", async function () {
+    await showMainLayout();
+    await showArticleList("");
+  });
+  selfPostIdButtonNav.addEventListener("click", async function(){
+    await showArticleList("");
+  })
 }());
 
 function request(url, method, ...header) {
@@ -37,27 +48,38 @@ function request(url, method, ...header) {
   });
 }
 
-async function getLatestArticle() {
-  mainContainer.innerHTML = '';
-  let article = await request("/api/article_list/", 'GET');
-  if (article["articles"] === undefined) {
-    let articleTitle = document.getElementById("article-title");
-    let articleContent = document.getElementById("article-content");
+async function getLatestArticleId() {
+  mainContainer.innerHTML = "";
+  let articleList = await request("/api/article_list/", 'GET');
+  return articleList["articles"][0];
+}
+
+async function showArticle(articleId) {
+  mainContainer.appendChild(articleContainer);
+  let articleTitle = document.getElementById("article-title");
+  let articleContent = document.getElementById("article-content");
+  let articleTime = document.getElementById("article-time");
+  let articleAuthor = document.getElementById("article-author");
+  if (articleId) {
+    let articlePack = await request("/api/article/" + articleId + "/content", 'GET');
+    articleTitle.innerText = articlePack["title"];
+    articleTime.innerText = articlePack["time"];
+    articleAuthor.innerText = articlePack["author"];
+    articleContent.innerText = articlePack["content"];
+    articleTime.innerHTML += "<span class=\"badge badge-success mx-2\">Latest</span>";
+  } else {
     articleTitle.innerText = "Something went wrong, we can't get anything...";
     articleContent.innerText = "Nothing here ~ ";
+  }
+}
+
+async function showArticleList(pageId) {
+  mainContainer.innerHTML = "";
+  let articleList = await request("/api/article_list/" + pageId || "", 'GET');
+  if (articleList["articles"] === undefined) {
+
   } else {
-    let latestId = article["articles"][0];
-    mainContainer.appendChild(articleContainer);
-    let latestArticle = await request("/api/article/" + latestId + "/content", 'GET');
-    let articleTitle = document.getElementById("article-title");
-    let articleContent = document.getElementById("article-content");
-    let articleTime = document.getElementById("article-time");
-    let articleAuthor = document.getElementById("article-author");
-    articleTitle.innerText = latestArticle["title"];
-    articleTime.innerText = latestArticle["time"];
-    articleAuthor.innerText = latestArticle["author"];
-    articleContent.innerText = latestArticle["content"];
-    articleTime.innerHTML += "<span class=\"badge badge-success mx-2\">Latest</span>";
+    mainContainer.appendChild(articleListContainer);
   }
 }
 
