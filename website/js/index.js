@@ -10,11 +10,13 @@ let articleContainer = document.getElementById("article-container");
   //green button in nav bar
   let latestPostButtonNav = document.getElementById("latest-post-button-nav");
   //add a event listener to the button.
-  latestPostButton.addEventListener("click", firstClick);
-  latestPostButton.addEventListener("click", getLatestArticle);
+  latestPostButton.addEventListener("click", async function () {
+    await showMainLayout();
+    await getLatestArticle();
+  });
   latestPostButtonNav.addEventListener("click", getLatestArticle);
   //add a event listener to the button.
-  selfPostIdButton.addEventListener("click", firstClick);
+  selfPostIdButton.addEventListener("click", showMainLayout);
 }());
 
 function request(url, method, ...header) {
@@ -38,13 +40,13 @@ function request(url, method, ...header) {
 async function getLatestArticle() {
   mainContainer.innerHTML = '';
   let article = await request("/api/article_list/", 'GET');
-  let latestId = article["articles"][0];
-  if (latestId === undefined) {
+  if (article["articles"] === undefined) {
     let articleTitle = document.getElementById("article-title");
     let articleContent = document.getElementById("article-content");
     articleTitle.innerText = "Something went wrong, we can't get anything...";
     articleContent.innerText = "Nothing here ~ ";
   } else {
+    let latestId = article["articles"][0];
     mainContainer.appendChild(articleContainer);
     let latestArticle = await request("/api/article/" + latestId + "/content", 'GET');
     let articleTitle = document.getElementById("article-title");
@@ -66,7 +68,7 @@ async function getLatestArticle() {
 //HIDE the big title and two buttons.
 //SHOW the navigation drawer.
 
-function firstClick() {
+async function showMainLayout() {
   //get navigation drawer object.
   let navBar = document.getElementById("navBar");
   //get title div object.
