@@ -9,23 +9,29 @@
 </head>
 <body>
 <div id="main-container">
-  <div id="page-title">
-    <!-- 一個 span 標籤組只會佔用自己本身的空間，不會像 DIV 標籤那樣一次佔掉一整行的空間-->
-    <span class="main-text">
-        ✾ Hey! PTT
+  <div id="article-list-area">
+    <div id="page-title">
+      <!-- 一個 span 標籤組只會佔用自己本身的空間，不會像 DIV 標籤那樣一次佔掉一整行的空間-->
+      <span class="main-text">
+        ✾ Hey! PTT <span id="board-name">Gossiping</span>
       </span>
-    <div class="colorful-line">
+      <div class="colorful-line"></div>
     </div>
-  </div>
-  <div id="list">
-<!--    <div class="article-card">-->
-<!--      <p class="article-card-title">Title</p>-->
-<!--      <hr/>-->
-<!--      <div class="article-card-info">-->
-<!--        <p class="article-card-author">author</p>-->
-<!--        <p class="article-card-time">time</p>-->
-<!--      </div>-->
-<!--    </div>-->
+    <span id="buttons">
+      <button class="github-btn github-btn-regular" id="prev-button">上一頁</button>
+      <button class="github-btn github-btn-regular" id="next-button">下一頁</button>
+      <button class="github-btn github-btn-green" id="latest-button">最新</button>
+    </span>
+    <div id="list">
+      <!--    <div class="article-card">-->
+      <!--      <p class="article-card-title">Title</p>-->
+      <!--      <hr/>-->
+      <!--      <div class="article-card-info">-->
+      <!--        <p class="article-card-author">author</p>-->
+      <!--        <p class="article-card-time">time</p>-->
+      <!--      </div>-->
+      <!--    </div>-->
+    </div>
   </div>
   <div id="article">
 
