@@ -4,12 +4,13 @@ html, body {
 
 #main-container {
     margin: 5% 5%;
+    justify-content: center;
 }
 
 #main-container .main-text {
     font-size: xx-large;
     font-weight: bolder;
-    margin: 0 0 10px 0;
+    margin: 20px 0 10px 0;
 }
 
 #main-container .colorful-line {
@@ -18,6 +19,14 @@ html, body {
     border-radius: 5px;
     margin: 10px 0;
     background: linear-gradient(to top right, #003377, #00aaaa);
+}
+
+#load-more-button {
+    margin: 20px 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
 }
 
 #board-name {
@@ -30,6 +39,10 @@ html, body {
     flex-wrap: wrap;
     align-content: start;
     justify-content: space-evenly;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    width: 95%;
 }
 
 #list .article-card {
@@ -170,11 +183,6 @@ html, body {
     box-shadow: none;
 }
 
-#buttons {
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: nowrap;
-}
 
 #main-title {
     display: flex;
@@ -184,6 +192,10 @@ html, body {
 }
 
 #page-title {
+    background-color: white;
     position: sticky;
     position: -webkit-sticky;
+    top: 0;
+    margin-top: 15px;
+    z-index: 99;
 }
