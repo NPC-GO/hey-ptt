@@ -20,7 +20,7 @@ html, body {
     background: linear-gradient(to top right, #003377, #00aaaa);
 }
 
-#board-name{
+#board-name {
     font-size: small;
     font-style: italic;
 }
@@ -87,6 +87,7 @@ html, body {
     background-size: 110% 110%;
     border: 1px solid rgba(27, 31, 35, 0.2);
     border-radius: 0.25em;
+    margin: 0 5px;
 }
 
 .github-btn.disabled,
@@ -170,5 +171,19 @@ html, body {
 }
 
 #buttons {
-    margin: 0 auto
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#main-title {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+#page-title {
+    position: sticky;
+    position: -webkit-sticky;
 }

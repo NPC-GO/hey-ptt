@@ -25,7 +25,7 @@ function request(url, method, ...header) {
         if (this.status === 200) {
           resolve(JSON.parse(this.responseText));
         } else {
-          reject(Error);
+          reject(this.status + " " + this.statusText);
         }
       }
     };
@@ -38,7 +38,7 @@ async function getArticleWithContent(articleId) {
 }
 
 async function getArticleTitle(articleId) {
-  return await request("/api/article/" + articleId, "GET");
+  return await request("/api/article/" + articleId, "GET").catch(console.log());
 }
 
 async function getList(page) {
@@ -62,7 +62,11 @@ async function showList(page) {
   let listContainer = document.getElementById("list");
   listContainer.innerHTML = "";
   (await Promise.all(list.map(async (articleId) => {
-    let cardData = await getArticleTitle(articleId);
+    let cardData = await getArticleTitle(articleId).catch(e => ({
+      title: "本文已被刪除",
+      time: e,
+      author: ""
+    }));
     return {
       title: cardData["title"],
       time: cardData["time"],
