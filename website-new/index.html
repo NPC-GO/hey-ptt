@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link rel="icon" href="assets/favicon.ico" type="image/iconx">
   <link href="css/default.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
   <title>Hey PTT</title>
@@ -11,32 +12,26 @@
 <div id="main-container">
   <div id="article-list-area">
     <div id="page-title">
-      <!-- 一個 span 標籤組只會佔用自己本身的空間，不會像 DIV 標籤那樣一次佔掉一整行的空間-->
       <div id="main-title">
         <span class="main-text">
         ✾ Hey! PTT <span id="board-name">Gossiping</span>
         </span>
-        <span id="buttons">
-        <button class="github-btn github-btn-regular" id="prev-button">上一頁</button>
-        <button class="github-btn github-btn-regular" id="next-button">下一頁</button>
-        <button class="github-btn github-btn-green" id="latest-button">最新</button>
-        </span>
       </div>
       <div class="colorful-line"></div>
     </div>
-    <div id="list">
-      <!--    <div class="article-card">-->
-      <!--      <p class="article-card-title">Title</p>-->
-      <!--      <hr/>-->
-      <!--      <div class="article-card-info">-->
-      <!--        <p class="article-card-author">author</p>-->
-      <!--        <p class="article-card-time">time</p>-->
-      <!--      </div>-->
-      <!--    </div>-->
-    </div>
+    <div id="list"></div>
   </div>
-  <div id="article">
-
+  <button id="load-more-button" class="github-btn github-btn-green">載入更多</button>
+</div>
+<div id="article-container">
+  <div class="content">
+    <div class="title">
+      <span id="close-article" class="close">&times;</span>
+      <h1 class="title-text"></h1>
+      <p></p>
+      <hr/>
+    </div>
+    <div class="article"></div>
   </div>
 </div>
 <script src="js/index.js"></script>

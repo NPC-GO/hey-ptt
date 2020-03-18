@@ -1,0 +1,29 @@
+name: deply to server
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        env:
+          PUBKEY: ${{ secrets.SSL_CERT }}
+          PRIKEY: ${{ secrets.SSL_KEY }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: PUBKEY,PRIKEY
+          script_stop: true
+          script: |
+            wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
+            echo "$PUBKEY" > ./certs/server.pub
+            echo "$PRIKEY" > ./certs/server.key
+            bash ./deploy.sh
+            exit

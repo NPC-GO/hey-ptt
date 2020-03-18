@@ -1,17 +1,28 @@
-let prevPage, lastPage, latestPage;
+let prevPage;
+let loadMoreButton = document.getElementById("load-more-button");
+
 (async function () {
-  let prevButton = document.getElementById("prev-button");
-  prevButton.addEventListener("click", async () => {
-    await showList(prevPage || "");
+  loadMoreButton.addEventListener("click", async () => {
+    await showList(prevPage);
   });
-  let nextButton = document.getElementById("next-button");
-  nextButton.addEventListener("click", async () => {
-    await showList(lastPage || "");
-  });
-  let latestButton = document.getElementById("latest-button");
-  latestButton.addEventListener("click", async () => {
-    await showList("");
-  });
+
+  let articleContainer = document.getElementById("article-container");
+
+  function close() {
+    articleContainer.style.display = "none";
+  }
+
+  let closeArticle = document.getElementById("close-article");
+  closeArticle.addEventListener("click", close);
+  onclick = (e) => {
+    if (e.target === articleContainer) {
+      close();
+    }
+  };
+
+  let colorBar = document.querySelector("#main-container .colorful-line");
+  const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+  colorBar.style.background = "linear-gradient(to top right," + "#" + randomColor() + "," + "#" + randomColor() + ")";
   await showList("");
 }());
 
@@ -38,7 +49,7 @@ async function getArticleWithContent(articleId) {
 }
 
 async function getArticleTitle(articleId) {
-  return await request("/api/article/" + articleId, "GET").catch(console.log());
+  return await request("/api/article/" + articleId, "GET");
 }
 
 async function getList(page) {
@@ -47,20 +58,11 @@ async function getList(page) {
 }
 
 async function showList(page) {
-  let prevButton = document.getElementById("prev-button");
-  let nextButton = document.getElementById("next-button");
-  let latestButton = document.getElementById("latest-button");
-  [prevButton, nextButton, latestButton].forEach((button) => {
-    button.disabled = true;
-    button.classList.add("disabled");
-  });
+  loadMoreButton.classList.add("disabled");
+  loadMoreButton.disabled = true;
   let list;
   [list, prevPage] = await getList(page);
-  if (!latestPage) {
-    latestPage = String(Number(prevPage) + 1);
-  }
   let listContainer = document.getElementById("list");
-  listContainer.innerHTML = "";
   (await Promise.all(list.map(async (articleId) => {
     let cardData = await getArticleTitle(articleId).catch(e => ({
       title: "本文已被刪除",
@@ -70,9 +72,10 @@ async function showList(page) {
     return {
       title: cardData["title"],
       time: cardData["time"],
-      author: cardData["author"]
+      author: cardData["author"],
+      id: articleId,
     }
-  }))).forEach((cardData) => {
+  }))).forEach(({time, author, title, id}) => {
     let card = document.createElement("div");
     let cardInfo = document.createElement("div");
     let cardTitle = document.createElement("p");
@@ -84,30 +87,28 @@ async function showList(page) {
     cardTitle.className += "article-card-title";
     cardAuthor.className += "article-card-author";
     cardTime.className += "article-card-time";
-    cardTime.appendChild(document.createTextNode(cardData.time));
-    cardAuthor.appendChild(document.createTextNode(cardData.author));
-    cardTitle.appendChild(document.createTextNode(cardData.title));
+    cardTime.appendChild(document.createTextNode(time));
+    cardAuthor.appendChild(document.createTextNode(author));
+    cardTitle.appendChild(document.createTextNode(title));
     cardInfo.appendChild(cardAuthor);
     cardInfo.appendChild(cardTime);
     card.appendChild(cardTitle);
     card.appendChild(hr);
     card.appendChild(cardInfo);
+    card.addEventListener("click", () => showArticle(id));
     listContainer.appendChild(card);
   });
-  latestButton.disabled = false;
-  latestButton.classList.remove("disabled");
-  lastPage = String(Number(prevPage) + 2);
-  if (prevPage) {
-    prevButton.disabled = false;
-    prevButton.classList.remove("disabled");
-  }
-  if (lastPage && Number(lastPage) <= Number(latestPage)) {
-    nextButton.disabled = false;
-    nextButton.classList.remove("disabled");
-  }
+  loadMoreButton.style.display = "inline";
+  loadMoreButton.classList.remove("disabled");
+  loadMoreButton.disabled = false;
 }
 
 async function showArticle(articleId) {
   let article = await getArticleWithContent(articleId);
-  //show
+  let titleText = document.getElementsByClassName("title-text")[0];
+  let articleText = document.getElementsByClassName("article")[0];
+  titleText.innerText = article["title"];
+  articleText.innerText = article["content"];
+  let articleContainer = document.getElementById("article-container");
+  articleContainer.style.display = "block";
 }
