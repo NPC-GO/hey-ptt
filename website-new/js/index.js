@@ -1,9 +1,24 @@
 let prevPage;
 let loadMoreButton = document.getElementById("load-more-button");
+
 (async function () {
-  loadMoreButton.addEventListener("click", async() => {
+  loadMoreButton.addEventListener("click", async () => {
     await showList(prevPage);
   });
+
+  let articleContainer = document.getElementById("article-container");
+
+  function close() {
+    articleContainer.style.display = "none";
+  }
+
+  let closeArticle = document.getElementById("close-article");
+  closeArticle.addEventListener("click", close);
+  onclick = (e) => {
+    if (e.target === articleContainer) {
+      close();
+    }
+  };
   await showList("");
 }());
 
@@ -48,12 +63,15 @@ async function showList(page) {
     let cardData = await getArticleTitle(articleId).catch(e => ({
       title: "本文已被刪除",
       time: e,
-      author: ""
+      author: "",
+      disabled: true
     }));
     return {
       title: cardData["title"],
       time: cardData["time"],
-      author: cardData["author"]
+      author: cardData["author"],
+      id: articleId,
+      disabled: false
     }
   }))).forEach((cardData) => {
     let card = document.createElement("div");
@@ -75,14 +93,20 @@ async function showList(page) {
     card.appendChild(cardTitle);
     card.appendChild(hr);
     card.appendChild(cardInfo);
+    card.addEventListener("click", () => showArticle(cardData.id));
     listContainer.appendChild(card);
   });
-  loadMoreButton.style.display="inline";
+  loadMoreButton.style.display = "inline";
   loadMoreButton.classList.remove("disabled");
   loadMoreButton.disabled = false;
 }
 
 async function showArticle(articleId) {
   let article = await getArticleWithContent(articleId);
-  //show
+  let titleText = document.getElementsByClassName("title-text")[0];
+  let articleText = document.getElementsByClassName("article")[0];
+  titleText.innerText = article["title"];
+  articleText.innerText = article["content"];
+  let articleContainer = document.getElementById("article-container");
+  articleContainer.style.display = "block";
 }
