@@ -5,6 +5,9 @@ git clone https://github.com/NPC-GO/hey-ptt.git
 cd hey-ptt
 pip3 install -r requirements.txt
 export FLASK_APP=app.py
-mkdir certs
+if [ -s ./certs ]
+  then
+    mkdir certs
+  fi
 mv ../certs/* ./certs
 screen sudo flask run --cert ./certs/server.pub --key ./certs/server.key --host=0.0.0.0 --port=443 && exit
