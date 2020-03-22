@@ -1,0 +1,28 @@
+name: deply to server
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  deploy:
+    name: deploy to server
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH command runner
+        uses: Evaneos/ssh-action@v0.1.0
+        env:
+          PUBKEY: ${{secrets.SSL_CERT}}
+          PRIKEY: ${{secrets.SSL_KEY}}
+        with:
+          hosts: ${{secrets.HOST}}
+          commands: |
+            wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
+            mkdir certs
+            echo "$PUBKEY" > ./certs/server.pub
+            echo "$PRIKEY" > ./certs/server.key
+            sudo bash ./deploy.sh
+            exit
+          user: ${{secrets.USER}}
+          private_key: ${{secrets.PRIVATE_KEY}}
+          
