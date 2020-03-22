@@ -12,10 +12,12 @@ jobs:
       - name: SSH command runner
         uses: Evaneos/ssh-action@v0.1.0
         env:
-          PUBKEY: ${{secrets.SSL_CERT}}
-          PRIKEY: ${{secrets.SSL_KEY}}
+          PUBKEY: ${{ secrets.SSL_CERT }}
+          PRIKEY: ${{ secrets.SSL_KEY }}
         with:
-          hosts: ${{secrets.HOST}}
+          hosts: ${{ secrets.HOST }}
+          user: ${{ secrets.USER }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
           commands: |
             wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
             mkdir certs
@@ -23,6 +25,4 @@ jobs:
             echo "$PRIKEY" > ./certs/server.key
             sudo bash ./deploy.sh
             exit
-          user: ${{secrets.USER}}
-          private_key: ${{secrets.PRIVATE_KEY}}
-          
+
