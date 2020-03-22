@@ -18,11 +18,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
-            mkdir hey-ptt
-            cd hey-ptt
             mkdir certs
             echo "$PUBKEY" > ./certs/server.pub
             echo "$PRIKEY" > ./certs/server.key
-            cd ..
             sudo bash ./deploy.sh
             exit
