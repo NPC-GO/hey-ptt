@@ -19,6 +19,7 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
+          envs: PUBKEY,PRIKEY
           script: |
             wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
             mkdir certs
