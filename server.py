@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask
 import crawler as cra
 
 app = Flask(__name__, static_folder='website-new', static_url_path='')
@@ -8,11 +8,6 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/', methods=["GET"])
 def give_html():
     return app.send_static_file('index.html')
-
-
-@app.route('/<path:path>', methods=["GET"])
-def give_js(path):
-    return send_from_directory('website-new', path)
 
 
 @app.route('/api/article/<article_id>', methods=["GET"])
