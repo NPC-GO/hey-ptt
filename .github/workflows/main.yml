@@ -6,23 +6,24 @@ on:
     branches: [ master ]
 jobs:
   deploy:
-    name: deploy to server
+    name: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: SSH command runner
-        uses: Evaneos/ssh-action@v0.1.0
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
         env:
-          PUBKEY: ${{secrets.SSL_CERT}}
-          PRIKEY: ${{secrets.SSL_KEY}}
+          PUBKEY: ${{ secrets.SSL_CERT }}
+          PRIKEY: ${{ secrets.SSL_KEY }}
         with:
-          hosts: ${{secrets.HOST}}
-          commands: |
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: PUBKEY,PRIKEY
+          script: |
             wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
             mkdir certs
             echo "$PUBKEY" > ./certs/server.pub
             echo "$PRIKEY" > ./certs/server.key
-            sudo bash ./deploy.sh
+            bash ./deploy.sh
             exit
-          user: ${{secrets.USER}}
-          private_key: ${{secrets.PRIVATE_KEY}}
-          
