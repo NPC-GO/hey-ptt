@@ -1,4 +1,4 @@
-rm -rf ./hey-ptt
+sudo rm -rf ./hey-ptt
 git clone https://github.com/NPC-GO/hey-ptt.git
 # shellcheck disable=SC2164
 cd hey-ptt
