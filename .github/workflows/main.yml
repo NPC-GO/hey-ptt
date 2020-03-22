@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
+        env:
+          PUBKEY: ${{ secrets.SSL_CERT }}
+          PRIKEY: ${{ secrets.SSL_KEY }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
