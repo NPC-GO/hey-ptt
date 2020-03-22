@@ -63,17 +63,15 @@ async function showList(page) {
     let cardData = await getArticleTitle(articleId).catch(e => ({
       title: "本文已被刪除",
       time: e,
-      author: "",
-      disabled: true
+      author: ""
     }));
     return {
       title: cardData["title"],
       time: cardData["time"],
       author: cardData["author"],
       id: articleId,
-      disabled: false
     }
-  }))).forEach((cardData) => {
+  }))).forEach(({time, author, title, id}) => {
     let card = document.createElement("div");
     let cardInfo = document.createElement("div");
     let cardTitle = document.createElement("p");
@@ -85,15 +83,15 @@ async function showList(page) {
     cardTitle.className += "article-card-title";
     cardAuthor.className += "article-card-author";
     cardTime.className += "article-card-time";
-    cardTime.appendChild(document.createTextNode(cardData.time));
-    cardAuthor.appendChild(document.createTextNode(cardData.author));
-    cardTitle.appendChild(document.createTextNode(cardData.title));
+    cardTime.appendChild(document.createTextNode(time));
+    cardAuthor.appendChild(document.createTextNode(author));
+    cardTitle.appendChild(document.createTextNode(title));
     cardInfo.appendChild(cardAuthor);
     cardInfo.appendChild(cardTime);
     card.appendChild(cardTitle);
     card.appendChild(hr);
     card.appendChild(cardInfo);
-    card.addEventListener("click", () => showArticle(cardData.id));
+    card.addEventListener("click", () => showArticle(id));
     listContainer.appendChild(card);
   });
   loadMoreButton.style.display = "inline";
