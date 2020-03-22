@@ -23,7 +23,6 @@ jobs:
           script_stop: true
           script: |
             wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
-            mkdir certs
             echo "$PUBKEY" > ./certs/server.pub
             echo "$PRIKEY" > ./certs/server.key
             bash ./deploy.sh
