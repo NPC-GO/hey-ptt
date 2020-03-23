@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link rel="icon" href="assets/favicon.ico" type="image/iconx">
+  <link href="assets/favicon.ico" rel="icon" type="image/iconx">
   <link href="css/default.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
   <title>Hey PTT</title>
@@ -21,18 +21,21 @@
     </div>
     <div id="list"></div>
   </div>
-  <button id="load-more-button" class="github-btn github-btn-green">載入更多</button>
+  <button class="github-btn github-btn-green" id="load-more-button">載入更多</button>
 </div>
 <div id="article-container">
   <div class="content">
     <div class="title">
-      <span id="close-article" class="close">&times;</span>
+      <span class="close" id="close-article">&times;</span>
       <h1 class="title-text"></h1>
       <p></p>
       <hr/>
     </div>
     <div class="article"></div>
   </div>
+</div>
+<div id="footer">
+  Copyright © 2020 N.P.C.GO Visit on <a href="https://github.com/NPC-GO/hey-ptt" target="_blank">GitHub</a>
 </div>
 <script src="js/index.js"></script>
 </body>

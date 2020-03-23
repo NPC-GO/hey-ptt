@@ -204,3 +204,15 @@ html, body {
     margin: 30px;
     word-wrap: break-word;
 }
+
+#footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 15px;
+    background-color: darkgrey;
+    color: white;
+    padding: 5px 5px 5px;
+    text-align: center;
+    font-size: small;
+}
