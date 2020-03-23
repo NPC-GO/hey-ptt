@@ -107,8 +107,12 @@ async function showArticle(articleId) {
   let article = await getArticleWithContent(articleId);
   let titleText = document.getElementsByClassName("title-text")[0];
   let articleText = document.getElementsByClassName("article")[0];
-  titleText.innerText = article["title"];
-  articleText.innerText = article["content"];
+  titleText.innerText = "";
+  articleText.innerText = "";
+  setTimeout(function () {
+    titleText.innerText = article["title"];
+    articleText.innerText = article["content"]
+  }, 600);
   let articleContainer = document.getElementById("article-container");
   articleContainer.style.display = "block";
 }
