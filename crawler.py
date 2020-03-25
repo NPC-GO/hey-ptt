@@ -17,7 +17,10 @@ def get_article(id_, is_include_content=False):
     # 以 GET 傳請求給目標伺服器，伺服器回傳 response 物件
     # response 接收回傳值
     cookies = dict({"over18": "1"})
+
     response = requests.get(url, cookies=cookies)
+    if response.status_code / 100 != 2:
+        return dict(author='', title='本文已被刪除', time='', content='', error=response.status_code)
 
     # 以 html.parser 為解析器解析 response.text 中的內容 存入 soup 中
     # response.text 為網頁原始碼
@@ -27,12 +30,14 @@ def get_article(id_, is_include_content=False):
     content = soup.find('div', id='main-container')
     # 抓取作者 標題 時間 的資訊
     information = content.find_all('span', class_='article-meta-value')
+    if information == list():
+        return dict(error='advanced content', author='', title='', time='', content='')
     author = information[0].text
     title = information[2].text
     time = information[3].text
 
     # 以 dict 存取
-    articles = {'author': author, 'title': title, 'time': time}
+    articles = dict(author=author, title=title, time=time)
 
     # 如果 is_include_content 為 True 及為需要取得內容
     if is_include_content is True:
@@ -41,7 +46,7 @@ def get_article(id_, is_include_content=False):
         # 刪除不需要的資訊
         for i in range(len(div) - 1):
             div[i + 1].clear()
-        articles.update({'content': div[0].get_text()})
+        articles.update(dict(content=div[0].get_text()))
 
     return articles
 
@@ -49,8 +54,12 @@ def get_article(id_, is_include_content=False):
 def get_article_ids(page=""):
     # format 中的內容會替換 {} 所在的位置
     url = 'https://www.ptt.cc/bbs/Gossiping/index{}.html'.format(page)
-    cookies = dict({"over18": "1"})
+    cookies = dict(over18="1")
+
     response = requests.get(url, cookies=cookies)
+    if response.status_code / 100 != 2:
+        return dict(articles='', prev='', error=response.status_code)
+
     if response.status_code == 200:
         # 搜尋所有標籤為 div 且 class 為 r-ent 的目標
         # class_ 是因為避免和保留字 class 衝突
@@ -60,8 +69,8 @@ def get_article_ids(page=""):
         prev_page = get_last_session_of_url(url[1].get('href'))
 
         # 新建 articles 的型別為 list
-        id_list = []
-        data = {'prev': prev_page}
+        id_list = list()
+        data = dict(prev=prev_page)
         # i 依序為在 content 中的項目
         for i in content:
             # 如果沒有找到標籤 a 表示文章被刪除 繼續往下一個目標尋找
@@ -76,11 +85,11 @@ def get_article_ids(page=""):
 
             # 存入基本資料
             id_list.append(article_id)
-        data.update({'articles': id_list})
+        data.update(dict(articles=id_list))
 
         return data
     else:
         soup = BeautifulSoup(response.text, 'html.parser')
         error = soup.find('title')
-        error_message = {'error': error.get_text()}
+        error_message = dict(error=error.get_text())
         return error_message

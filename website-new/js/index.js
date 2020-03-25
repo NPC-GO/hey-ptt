@@ -74,29 +74,32 @@ async function showList(page) {
       time: cardData["time"],
       author: cardData["author"],
       id: articleId,
+      disabled: cardData["error"]
     }
-  }))).forEach(({time, author, title, id}) => {
-    let card = document.createElement("div");
-    let cardInfo = document.createElement("div");
-    let cardTitle = document.createElement("p");
-    let cardAuthor = document.createElement("p");
-    let cardTime = document.createElement("p");
-    let hr = document.createElement("hr");
-    card.className += "article-card";
-    cardInfo.className += "article-card-info";
-    cardTitle.className += "article-card-title";
-    cardAuthor.className += "article-card-author";
-    cardTime.className += "article-card-time";
-    cardTime.appendChild(document.createTextNode(time));
-    cardAuthor.appendChild(document.createTextNode(author));
-    cardTitle.appendChild(document.createTextNode(title));
-    cardInfo.appendChild(cardAuthor);
-    cardInfo.appendChild(cardTime);
-    card.appendChild(cardTitle);
-    card.appendChild(hr);
-    card.appendChild(cardInfo);
-    card.addEventListener("click", () => showArticle(id));
-    listContainer.appendChild(card);
+  }))).forEach(({time, author, title, id, disabled}) => {
+    if (!disabled) {
+      let card = document.createElement("div");
+      let cardInfo = document.createElement("div");
+      let cardTitle = document.createElement("p");
+      let cardAuthor = document.createElement("p");
+      let cardTime = document.createElement("p");
+      let hr = document.createElement("hr");
+      card.className += "article-card";
+      cardInfo.className += "article-card-info";
+      cardTitle.className += "article-card-title";
+      cardAuthor.className += "article-card-author";
+      cardTime.className += "article-card-time";
+      cardTime.appendChild(document.createTextNode(time));
+      cardAuthor.appendChild(document.createTextNode(author));
+      cardTitle.appendChild(document.createTextNode(title));
+      cardInfo.appendChild(cardAuthor);
+      cardInfo.appendChild(cardTime);
+      card.appendChild(cardTitle);
+      card.appendChild(hr);
+      card.appendChild(cardInfo);
+      card.addEventListener("click", () => showArticle(id));
+      listContainer.appendChild(card);
+    }
   });
   loadMoreButton.style.display = "inline";
   loadMoreButton.classList.remove("disabled");
