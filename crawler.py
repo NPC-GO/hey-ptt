@@ -88,8 +88,7 @@ def get_article_ids(page=""):
         data.update(dict(articles=id_list))
 
         return data
-    else:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        error = soup.find('title')
-        error_message = dict(error=error.get_text())
-        return error_message
+    soup = BeautifulSoup(response.text, 'html.parser')
+    error = soup.find('title')
+    error_message = dict(error=error.get_text())
+    return error_message

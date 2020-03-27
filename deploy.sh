@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo pkill screen
 sudo pkill flask
 sudo rm -rf ./hey-ptt
