@@ -155,9 +155,21 @@ html, body {
     color: #aaa;
     float: right;
     padding: 0 10px 0;
-    font-size: 45px;
+    font-size: 50px;
     font-weight: bold;
     transition: 0.3s;
+}
+
+@media screen and (max-width: 1000px){
+    #article-container .close {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    #article-container .close {
+        font-size: 30px;
+    }
 }
 
 #article-container .close:hover,
