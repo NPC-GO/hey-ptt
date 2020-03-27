@@ -21,6 +21,9 @@
     </div>
     <div id="list"></div>
   </div>
+  <div class="progress-bar-container" id="progress-bar">
+    <span class="progress-bar"></span>
+  </div>
   <button class="github-btn github-btn-green" id="load-more-button">載入更多</button>
 </div>
 <div id="article-container">
@@ -29,13 +32,21 @@
       <span class="close" id="close-article">&times;</span>
       <h1 class="title-text"></h1>
       <p></p>
-      <div style="width: 98%;margin: auto;position: relative">
-        <div class="colorful-line"></div>
-      </div>
+      <div class="colorful-line" id="article-color-line"></div>
     </div>
     <div class="article"></div>
   </div>
 </div>
+<div id="loading-icon">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <p id="loading-text">載入中</p>
+</div>
+
 <div id="footer">
   Copyright © 2020 N.P.C.GO Visit on <a href="https://github.com/NPC-GO/hey-ptt" target="_blank">GitHub</a>
 </div>

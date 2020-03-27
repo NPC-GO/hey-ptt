@@ -1,4 +1,5 @@
-@import url("./button.css");
+@import "./button.css";
+@import "loading.css";
 
 @keyframes animateTop {
     from {
@@ -57,6 +58,7 @@ html, body {
     margin-left: auto;
     position: relative;
     width: 95%;
+    transition: 0.3s;
 }
 
 #list .article-card {
@@ -92,6 +94,7 @@ html, body {
     color: #003377;
     font-weight: bold;
     line-height: normal;
+    transition: 0.3s;
 }
 
 #list .article-card-author {
@@ -117,6 +120,7 @@ html, body {
     position: -webkit-sticky;
     top: 0;
     z-index: 999;
+    max-height: 100px;
 }
 
 
@@ -137,7 +141,7 @@ html, body {
     background-color: #fefefe;
     position: relative;
     margin: 20px auto;
-    padding: 0 0 20px;
+    padding: 0 20px 20px;
     width: 90%;
     max-width: 1200px;
     height: 90%;
@@ -186,10 +190,13 @@ html, body {
 }
 
 #article-container .title-text {
-    font-size: 3em;
+    font-size: 3rem;
     font-weight: bold;
     margin: 0 10px 10px;
     padding: 10px 0 0;
+    white-space: nowrap;
+    overflow: scroll;
+    text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 1000px) {
@@ -220,6 +227,12 @@ html, body {
     word-wrap: break-word;
 }
 
+#article-container .colorful-line {
+    width: 98%;
+    margin: auto;
+    position: relative
+}
+
 #footer {
     position: fixed;
     width: 100%;
@@ -230,4 +243,54 @@ html, body {
     padding: 5px 5px 5px;
     text-align: center;
     font-size: small;
+}
+
+.progress-bar-container {
+    position: relative;
+    margin: 20px auto;
+    padding: 1px;
+    border: 3px solid black;
+    border-radius: 10px;
+    height: 10px;
+    width: 50%;
+    max-width: 400px;
+    justify-content: start;
+    display: flex;
+    transition: 0.2s;
+}
+
+.progress-bar {
+    height: 10px;
+    background: linear-gradient(#2fcb53, #003333);
+    width: 0;
+    border-radius: 10px;
+    display: inline-block;
+    transition: 600ms;
+}
+
+#loading-icon {
+    z-index: 99998;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    padding-bottom: calc(30% * 9 / 32);
+    padding-top: calc(30% * 9 / 32);
+    transition: 0.5s;
+    overscroll-behavior: contain;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-text {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
 }

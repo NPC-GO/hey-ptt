@@ -30,7 +30,7 @@ def get_article(id_, is_include_content=False):
     content = soup.find('div', id='main-container')
     # 抓取作者 標題 時間 的資訊
     information = content.find_all('span', class_='article-meta-value')
-    if information == list():
+    if len(information) < 4:
         return dict(error='advanced content', author='', title='', time='', content='')
     author = information[0].text
     title = information[2].text
