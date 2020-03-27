@@ -150,7 +150,6 @@ html, body {
     animation-name: animateTop;
     animation-duration: 0.5s;
     overflow: scroll;
-    overscroll-behavior: contain;
 }
 
 #article-container .close {
@@ -196,7 +195,6 @@ html, body {
     padding: 10px 0 0;
     white-space: nowrap;
     overflow: scroll;
-    text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 1000px) {
@@ -210,6 +208,7 @@ html, body {
         font-size: 1.5em;
     }
 }
+
 
 #article-container .title {
     top: 0;
