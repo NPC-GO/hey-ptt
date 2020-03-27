@@ -15,6 +15,7 @@ html, body {
     height: 100%;
 }
 
+
 #main-container {
     margin: 5% 5%;
     justify-content: center;
@@ -144,6 +145,7 @@ html, body {
     animation-name: animateTop;
     animation-duration: 0.5s;
     overflow: scroll;
+    overscroll-behavior: contain;
 }
 
 #article-container .close {
