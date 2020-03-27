@@ -27,7 +27,7 @@ html, body {
     padding: 20px 0 10px 0;
 }
 
-#main-container .colorful-line {
+.colorful-line {
     height: 10px;
     width: 100%;
     border-radius: 5px;
@@ -160,13 +160,13 @@ html, body {
     transition: 0.3s;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1000px) {
     #article-container .close {
         font-size: 40px;
     }
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
     #article-container .close {
         font-size: 30px;
     }
