@@ -35,7 +35,7 @@ html, body {
 }
 
 #load-more-button {
-    margin: 20px auto;
+    margin: 20px auto 30px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
