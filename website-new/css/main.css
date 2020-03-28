@@ -26,7 +26,7 @@ html, body {
 #main-container .main-text {
     font-size: xx-large;
     font-weight: bolder;
-    padding: 20px 0 10px;
+    padding: 20px 0 0;
 }
 
 .colorful-line {
@@ -110,9 +110,11 @@ html, body {
 
 #main-title {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: start;
+    flex-wrap: nowrap;
     align-items: end;
+    -webkit-align-items: flex-end;
+    white-space: nowrap;
 }
 
 #page-title {
@@ -190,12 +192,13 @@ html, body {
 }
 
 #article-container .title-text {
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
     margin: 0 10px 10px;
     padding: 10px 0 0;
     white-space: nowrap;
-    overflow: scroll;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 

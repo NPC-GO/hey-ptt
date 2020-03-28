@@ -12,18 +12,26 @@ def give_html():
 
 @app.route('/api/articles/<article_id>/info', methods=['GET'])
 def article_info(article_id):
-    return cra.get_article(article_id, is_include_content=False)
+    board = request.args.get('board')
+    return cra.get_article(article_id, board, is_include_content=False)
 
 
 @app.route('/api/articles/<article_id>', methods=['GET'])
 def article_content(article_id):
-    return cra.get_article(article_id, is_include_content=True)
+    board = request.args.get('board')
+    return cra.get_article(article_id, board, is_include_content=True)
 
 
 @app.route('/api/articles', methods=['GET'])
 def article_ids():
     page = request.args.get('page')
-    return cra.get_article_ids(page)
+    board = request.args.get('board')
+    return cra.get_article_ids(board, page)
+
+
+@app.route('/api/boards', methods=['GET'])
+def get_boards():
+    return cra.get_popular_boards()
 
 
 if __name__ == '__main__':

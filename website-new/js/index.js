@@ -1,4 +1,5 @@
-let prevPage;
+let currentBoard = getCookie("board") || "Gossiping";
+let prevPage, boards;
 let loadMoreButton = document.getElementById("load-more-button");
 let loadingIcon = document.getElementById("loading-icon");
 let loadingIconChildren = loadingIcon.children;
@@ -22,11 +23,15 @@ let loadingIconChildren = loadingIcon.children;
     }
   };
 
+  let boardsSelectBox = document.getElementById("boards");
+  boardsSelectBox.addEventListener("change", changeBoard);
+
   let colorBars = document.querySelectorAll(".colorful-line");
   const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
   colorBars.forEach((coloBar) => {
     coloBar.style.background = "linear-gradient(to top right," + "#" + randomColor() + "," + "#" + randomColor() + ")";
   });
+  await showBoardsSelectorOptions();
   await showList();
 }());
 
@@ -54,6 +59,17 @@ function request(url, method, parameters, ...header) {
   });
 }
 
+function getCookie(name) {
+  let cookieArr = document.cookie.split(";");
+  for (let i = 0; i < cookieArr.length; i++) {
+    let cookiePair = cookieArr[i].split("=");
+    if (name === cookiePair[0].trim()) {
+      return decodeURIComponent(cookiePair[1]);
+    }
+  }
+  return null;
+}
+
 function errorHandler(e) {
   loadingIconChildren[0].style.display = "inline";
   loadingIconChildren[0].textContent = e.slice(0, 3) + " ERROR";
@@ -66,43 +82,79 @@ function leaveError() {
   loadingIconChildren[1].style.display = "inline";
 }
 
-async function getArticleWithContent(articleId) {
-  return await request("/api/articles/" + articleId, "GET")
-    .catch((e) => errorHandler(e));
+async function getArticleWithContent(articleId, board) {
+  return await request("/api/articles/" + articleId, "GET", `board=${board || currentBoard}`)
+    .catch((e) => errorHandler(e)) || "";
 }
 
-async function getArticleTitle(articleId) {
-  return await request("/api/articles/" + articleId + "/info", "GET")
-    .catch((e) => errorHandler(e));
+async function getArticleTitle(articleId, board) {
+  return await request("/api/articles/" + articleId + "/info", "GET", `board=${board || currentBoard}`)
+    .catch((e) => errorHandler(e)) || "";
 }
 
-async function getList(page) {
-  let list = await request("/api/articles", "GET", `page=${page || ""}`)
+async function getList(page, board) {
+  let list = await request("/api/articles", "GET", `page=${page || ""}&board=${board || currentBoard}`)
     .catch((e) => errorHandler(e));
-  return [list["articles"], list["prev"]];
+  return [list["articles"] || [], list["prev"] || []];
 }
 
-async function showList(page) {
+async function getBoards() {
+  let boards = await request("/api/boards", "GET")
+    .catch((e) => errorHandler(e));
+  return boards["boards"] || {boards: "Gossiping"};
+}
+
+async function showBoardsSelectorOptions() {
+  leaveError();
+  loadingIcon.style.display = "flex";
+  boards = await getBoards();
+  let boardsSelectBox = document.getElementById("boards");
+  boards.forEach(board => {
+    let option = document.createElement("option");
+    option.text = board;
+    boardsSelectBox.add(option);
+  });
+  let inferredBoardIndex = getCookie("board-index") || 0;
+  if (boardsSelectBox[inferredBoardIndex] !== currentBoard) {
+    boardsSelectBox.selectedIndex = boards.findIndex(board => board === currentBoard);
+  } else {
+    boardsSelectBox.selectedIndex = inferredBoardIndex;
+  }
+  loadingIcon.style.display = "none";
+}
+
+async function changeBoard() {
+  let listContainer = document.getElementById("list");
+  listContainer.innerHTML = "";
+  currentBoard = boards[this.selectedIndex];
+  await showList("", currentBoard);
+  document.cookie = `board=${currentBoard}`;
+  document.cookie = `board-index=${this.selectedIndex}`;
+}
+
+async function showList(page, board) {
   leaveError();
   loadingIcon.style.display = "flex";
   loadMoreButton.classList.add("disabled");
   loadMoreButton.disabled = true;
   loadMoreButton.textContent = "載入中...";
   let list;
-  [list, prevPage] = await getList(page);
+  [list, prevPage] = await getList(page, board);
   let listContainer = document.getElementById("list");
   let progressBar = document.getElementsByClassName("progress-bar")[0];
   let partOfProgress = 100 / list.length;
+  let progressBarStatus = 0;
   progressBar.parentNode.style.display = "flex";
   progressBar.style.width = "0";
-  (await Promise.all(list.map(async (articleId, index) => {
-    let cardData = await getArticleTitle(articleId).catch(e => ({
+  (await Promise.all(list.map(async (articleId) => {
+    let cardData = await getArticleTitle(articleId, board).catch(e => ({
       title: "無法載入文章",
       time: e,
       author: "",
       disabled: true
     }));
-    progressBar.style.width = (index + 2) * partOfProgress + "%";
+    progressBarStatus += partOfProgress;
+    progressBar.style.width = progressBarStatus + "%";
     await new Promise(resolve => setTimeout(() => resolve(), 800));
     return {
       title: cardData["title"],
@@ -148,10 +200,10 @@ async function showList(page) {
   loadingIcon.style.display = "none";
 }
 
-async function showArticle(articleId) {
+async function showArticle(articleId, board) {
   leaveError();
   loadingIcon.style.display = "flex";
-  let article = await getArticleWithContent(articleId);
+  let article = await getArticleWithContent(articleId, board);
   if (article === undefined) {
     errorHandler("404");
     return;

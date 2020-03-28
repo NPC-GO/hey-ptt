@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 # 取出頁數或是 id
-def get_last_session_of_url(url):
+def get_last_session_of_url(url) -> str:
     url_split = url.split('/')
     page_or_id = url_split[3]
     page_or_id = page_or_id.replace('index', '')
@@ -11,8 +11,11 @@ def get_last_session_of_url(url):
     return page_or_id
 
 
-def get_article(id_, is_include_content=False):
-    url = 'https://www.ptt.cc/bbs/Gossiping/' + id_ + '.html'
+def get_article(id_, board="Gossiping", is_include_content=False) -> dict:
+    base_url = "https://www.ptt.cc/bbs/"
+    if board is None:
+        board = "Gossiping"
+    url = base_url + board + "/" + id_ + '.html'
 
     # 以 GET 傳請求給目標伺服器，伺服器回傳 response 物件
     # response 接收回傳值
@@ -51,13 +54,16 @@ def get_article(id_, is_include_content=False):
     return articles
 
 
-def get_article_ids(page=""):
-
+def get_article_ids(board="Gossiping", page="") -> dict:
+    base_url = "https://www.ptt.cc/bbs/"
     if page is None:
         page = ""
 
+    if board is None:
+        board = "Gossiping"
+
     # format 中的內容會替換 {} 所在的位置
-    url = 'https://www.ptt.cc/bbs/Gossiping/index{}.html'.format(page)
+    url = base_url + board + '/index{}.html'.format(page)
     cookies = dict(over18="1")
 
     response = requests.get(url, cookies=cookies)
@@ -96,3 +102,13 @@ def get_article_ids(page=""):
     error = soup.find('title')
     error_message = dict(error=error.get_text())
     return error_message
+
+
+def get_popular_boards() -> dict:
+    url = "https://www.ptt.cc/bbs/index.html"
+    response = requests.get(url)
+    if not response or response.status_code != 200:
+        return dict(boards=["Gossiping"])
+    soup = BeautifulSoup(response.text, 'html.parser')
+    board_names = [div.get_text() for div in soup.find_all("div", class_="board-name")]
+    return dict(boards=board_names)
