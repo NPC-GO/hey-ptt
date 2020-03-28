@@ -192,12 +192,13 @@ html, body {
 }
 
 #article-container .title-text {
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
     margin: 0 10px 10px;
     padding: 10px 0 0;
     white-space: nowrap;
-    overflow: scroll;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
