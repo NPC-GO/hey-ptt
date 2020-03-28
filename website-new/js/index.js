@@ -1,4 +1,5 @@
-let prevPage;
+let currentBoard = "Gossiping";
+let prevPage, boards;
 let loadMoreButton = document.getElementById("load-more-button");
 let loadingIcon = document.getElementById("loading-icon");
 let loadingIconChildren = loadingIcon.children;
@@ -21,6 +22,9 @@ let loadingIconChildren = loadingIcon.children;
       close();
     }
   };
+
+  let boardsSelectBox = document.getElementById("boards");
+  boardsSelectBox.addEventListener("change", changeBoard);
 
   let colorBars = document.querySelectorAll(".colorful-line");
   const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
@@ -67,18 +71,18 @@ function leaveError() {
   loadingIconChildren[1].style.display = "inline";
 }
 
-async function getArticleWithContent(articleId) {
-  return await request("/api/articles/" + articleId, "GET")
+async function getArticleWithContent(articleId, board) {
+  return await request("/api/articles/" + articleId, "GET", `board=${board || currentBoard}`)
     .catch((e) => errorHandler(e)) || "";
 }
 
-async function getArticleTitle(articleId) {
-  return await request("/api/articles/" + articleId + "/info", "GET")
+async function getArticleTitle(articleId, board) {
+  return await request("/api/articles/" + articleId + "/info", "GET", `board=${board || currentBoard}`)
     .catch((e) => errorHandler(e)) || "";
 }
 
-async function getList(page) {
-  let list = await request("/api/articles", "GET", `page=${page || ""}`)
+async function getList(page, board) {
+  let list = await request("/api/articles", "GET", `page=${page || ""}&board=${board || currentBoard}`)
     .catch((e) => errorHandler(e));
   return [list["articles"] || [], list["prev"] || []];
 }
@@ -92,7 +96,7 @@ async function getBoards() {
 async function showBoardsSelectorOptions() {
   leaveError();
   loadingIcon.style.display = "flex";
-  let boards = await getBoards();
+  boards = await getBoards();
   let boardsSelectBox = document.getElementById("boards");
   boards.forEach(board => {
     let option = document.createElement("option");
@@ -102,14 +106,21 @@ async function showBoardsSelectorOptions() {
   loadingIcon.style.display = "none";
 }
 
-async function showList(page) {
+async function changeBoard() {
+  let listContainer = document.getElementById("list");
+  listContainer.innerHTML = "";
+  currentBoard = boards[this.selectedIndex];
+  await showList("", currentBoard);
+}
+
+async function showList(page, board) {
   leaveError();
   loadingIcon.style.display = "flex";
   loadMoreButton.classList.add("disabled");
   loadMoreButton.disabled = true;
   loadMoreButton.textContent = "載入中...";
   let list;
-  [list, prevPage] = await getList(page);
+  [list, prevPage] = await getList(page, board);
   let listContainer = document.getElementById("list");
   let progressBar = document.getElementsByClassName("progress-bar")[0];
   let partOfProgress = 100 / list.length;
@@ -117,7 +128,7 @@ async function showList(page) {
   progressBar.parentNode.style.display = "flex";
   progressBar.style.width = "0";
   (await Promise.all(list.map(async (articleId) => {
-    let cardData = await getArticleTitle(articleId).catch(e => ({
+    let cardData = await getArticleTitle(articleId, board).catch(e => ({
       title: "無法載入文章",
       time: e,
       author: "",
@@ -170,10 +181,10 @@ async function showList(page) {
   loadingIcon.style.display = "none";
 }
 
-async function showArticle(articleId) {
+async function showArticle(articleId, board) {
   leaveError();
   loadingIcon.style.display = "flex";
-  let article = await getArticleWithContent(articleId);
+  let article = await getArticleWithContent(articleId, board);
   if (article === undefined) {
     errorHandler("404");
     return;
