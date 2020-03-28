@@ -1,4 +1,4 @@
-let currentBoard = "Gossiping";
+let currentBoard = getCookie("board") || "Gossiping";
 let prevPage, boards;
 let loadMoreButton = document.getElementById("load-more-button");
 let loadingIcon = document.getElementById("loading-icon");
@@ -59,6 +59,17 @@ function request(url, method, parameters, ...header) {
   });
 }
 
+function getCookie(name) {
+  let cookieArr = document.cookie.split(";");
+  for (let i = 0; i < cookieArr.length; i++) {
+    let cookiePair = cookieArr[i].split("=");
+    if (name === cookiePair[0].trim()) {
+      return decodeURIComponent(cookiePair[1]);
+    }
+  }
+  return null;
+}
+
 function errorHandler(e) {
   loadingIconChildren[0].style.display = "inline";
   loadingIconChildren[0].textContent = e.slice(0, 3) + " ERROR";
@@ -103,6 +114,7 @@ async function showBoardsSelectorOptions() {
     option.text = board;
     boardsSelectBox.add(option);
   });
+  boardsSelectBox.selectedIndex = Number(getCookie("board-index")) || 0;
   loadingIcon.style.display = "none";
 }
 
@@ -111,6 +123,8 @@ async function changeBoard() {
   listContainer.innerHTML = "";
   currentBoard = boards[this.selectedIndex];
   await showList("", currentBoard);
+  document.cookie = `board=${currentBoard}`;
+  document.cookie = `board-index=${this.selectedIndex}`;
 }
 
 async function showList(page, board) {
