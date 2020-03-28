@@ -52,6 +52,10 @@ def get_article(id_, is_include_content=False):
 
 
 def get_article_ids(page=""):
+
+    if page is None:
+        page = ""
+
     # format 中的內容會替換 {} 所在的位置
     url = 'https://www.ptt.cc/bbs/Gossiping/index{}.html'.format(page)
     cookies = dict(over18="1")
