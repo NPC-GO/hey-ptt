@@ -114,7 +114,12 @@ async function showBoardsSelectorOptions() {
     option.text = board;
     boardsSelectBox.add(option);
   });
-  boardsSelectBox.selectedIndex = Number(getCookie("board-index")) || 0;
+  let inferredBoardIndex = getCookie("board-index") || 0;
+  if (boardsSelectBox[inferredBoardIndex] !== currentBoard) {
+    boardsSelectBox.selectedIndex = boards.findIndex(board => board === currentBoard);
+  } else {
+    boardsSelectBox.selectedIndex = inferredBoardIndex;
+  }
   loadingIcon.style.display = "none";
 }
 
