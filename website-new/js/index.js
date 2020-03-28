@@ -27,6 +27,7 @@ let loadingIconChildren = loadingIcon.children;
   colorBars.forEach((coloBar) => {
     coloBar.style.background = "linear-gradient(to top right," + "#" + randomColor() + "," + "#" + randomColor() + ")";
   });
+  await showBoardsSelectorOptions();
   await showList();
 }());
 
@@ -68,18 +69,37 @@ function leaveError() {
 
 async function getArticleWithContent(articleId) {
   return await request("/api/articles/" + articleId, "GET")
-    .catch((e) => errorHandler(e));
+    .catch((e) => errorHandler(e)) || "";
 }
 
 async function getArticleTitle(articleId) {
   return await request("/api/articles/" + articleId + "/info", "GET")
-    .catch((e) => errorHandler(e));
+    .catch((e) => errorHandler(e)) || "";
 }
 
 async function getList(page) {
   let list = await request("/api/articles", "GET", `page=${page || ""}`)
     .catch((e) => errorHandler(e));
-  return [list["articles"], list["prev"]];
+  return [list["articles"] || [], list["prev"] || []];
+}
+
+async function getBoards() {
+  let boards = await request("/api/boards", "GET")
+    .catch((e) => errorHandler(e));
+  return boards["boards"] || {boards: "Gossiping"};
+}
+
+async function showBoardsSelectorOptions() {
+  leaveError();
+  loadingIcon.style.display = "flex";
+  let boards = await getBoards();
+  let boardsSelectBox = document.getElementById("boards");
+  boards.forEach(board => {
+    let option = document.createElement("option");
+    option.text = board;
+    boardsSelectBox.add(option);
+  });
+  loadingIcon.style.display = "none";
 }
 
 async function showList(page) {
@@ -93,16 +113,18 @@ async function showList(page) {
   let listContainer = document.getElementById("list");
   let progressBar = document.getElementsByClassName("progress-bar")[0];
   let partOfProgress = 100 / list.length;
+  let progressBarStatus = 0;
   progressBar.parentNode.style.display = "flex";
   progressBar.style.width = "0";
-  (await Promise.all(list.map(async (articleId, index) => {
+  (await Promise.all(list.map(async (articleId) => {
     let cardData = await getArticleTitle(articleId).catch(e => ({
       title: "無法載入文章",
       time: e,
       author: "",
       disabled: true
     }));
-    progressBar.style.width = (index + 2) * partOfProgress + "%";
+    progressBarStatus += partOfProgress;
+    progressBar.style.width = progressBarStatus + "%";
     await new Promise(resolve => setTimeout(() => resolve(), 800));
     return {
       title: cardData["title"],
