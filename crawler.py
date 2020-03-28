@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-base_url = "https://www.ptt.cc/bbs/"
-
 
 # 取出頁數或是 id
 def get_last_session_of_url(url) -> str:
@@ -14,7 +12,7 @@ def get_last_session_of_url(url) -> str:
 
 
 def get_article(id_, board="Gossiping", is_include_content=False) -> dict:
-    global base_url
+    base_url = "https://www.ptt.cc/bbs/"
     if board is None:
         board = "Gossiping"
     url = base_url + board + "/" + id_ + '.html'
@@ -57,7 +55,7 @@ def get_article(id_, board="Gossiping", is_include_content=False) -> dict:
 
 
 def get_article_ids(board="Gossiping", page="") -> dict:
-    global base_url
+    base_url = "https://www.ptt.cc/bbs/"
     if page is None:
         page = ""
 
