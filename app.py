@@ -31,9 +31,4 @@ def latest_page_article_ids():
 
 
 if __name__ == '__main__':
-#     import ssl
-#
-#     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_3)
-#     ssl_context.load_cert_chain('./certs/server.pub', './certs/server.key')
-#     ssl_context=ssl_context
     app.run()

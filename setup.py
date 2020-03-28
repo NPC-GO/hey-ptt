@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setup(
     name="npc-class-hey-ptt",
-    version="1.0",
+    version="1.3",
     author="NPC-GO team.",
-    author_email="trusaidlin@gmail.com",
+    author_email="npc.designer@gmail.com",
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -19,5 +19,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
 )
