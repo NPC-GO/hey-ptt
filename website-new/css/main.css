@@ -199,8 +199,6 @@ html, body {
 }
 
 
-
-
 #article-container .title {
     top: 0;
     position: sticky;
@@ -275,6 +273,17 @@ html, body {
     display: none;
     justify-content: center;
     align-items: center;
+}
+
+#loading-icon .error-code {
+    display: none;
+    color: white;
+    padding: 5px;
+    font-weight: 700;
+    text-align: center;
+    font-size: large;
+    background: red;
+    border-radius: 10px;
 }
 
 #loading-text {

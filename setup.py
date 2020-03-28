@@ -8,7 +8,7 @@ setup(
     version="1.3",
     author="NPC-GO team.",
     author_email="npc.designer@gmail.com",
-    description="",
+    description="NPC.GO Team 2020 web club class project",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/NPC-GO/hey-ptt",
@@ -19,5 +19,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    python_requires='>=3.6',
 )

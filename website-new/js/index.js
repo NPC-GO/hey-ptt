@@ -1,7 +1,7 @@
 let prevPage;
 let loadMoreButton = document.getElementById("load-more-button");
 let loadingIcon = document.getElementById("loading-icon");
-
+let loadingIconChildren = loadingIcon.children;
 
 (async function () {
   loadMoreButton.addEventListener("click", async () => {
@@ -27,14 +27,18 @@ let loadingIcon = document.getElementById("loading-icon");
   colorBars.forEach((coloBar) => {
     coloBar.style.background = "linear-gradient(to top right," + "#" + randomColor() + "," + "#" + randomColor() + ")";
   });
-  await showList("");
+  await showList();
 }());
 
-function request(url, method, ...header) {
+function request(url, method, parameters, ...header) {
   return new Promise(function (resolve, reject) {
     let httpRequest = new XMLHttpRequest();
-    httpRequest.open(method || "GET", url);
     header.forEach(h => httpRequest.setRequestHeader(h.key, h.value));
+    if (method === "GET") {
+      url += ("?" + parameters);
+      parameters = null;
+    }
+    httpRequest.open(method, url);
     httpRequest.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 200) {
@@ -44,24 +48,40 @@ function request(url, method, ...header) {
         }
       }
     };
-    httpRequest.send();
+    httpRequest.send(JSON.stringify(parameters));
   });
 }
 
+function errorHandler(e) {
+  loadingIconChildren[0].style.display = "inline";
+  loadingIconChildren[0].textContent = e.slice(0, 3) + " ERROR";
+  loadingIconChildren[1].style.display = "none";
+  document.getElementById("progress-bar").style.display = "none";
+}
+
+function leaveError() {
+  loadingIconChildren[0].style.display = "none";
+  loadingIconChildren[1].style.display = "inline";
+}
+
 async function getArticleWithContent(articleId) {
-  return await request("/api/article/" + articleId + "/content", "GET");
+  return await request("/api/articles/" + articleId, "GET")
+    .catch((e) => errorHandler(e));
 }
 
 async function getArticleTitle(articleId) {
-  return await request("/api/article/" + articleId, "GET");
+  return await request("/api/articles/" + articleId + "/info", "GET")
+    .catch((e) => errorHandler(e));
 }
 
 async function getList(page) {
-  let list = await request("/api/article_list/" + page || "", "GET");
+  let list = await request("/api/articles", "GET", `page=${page || ""}`)
+    .catch((e) => errorHandler(e));
   return [list["articles"], list["prev"]];
 }
 
 async function showList(page) {
+  leaveError();
   loadingIcon.style.display = "flex";
   loadMoreButton.classList.add("disabled");
   loadMoreButton.disabled = true;
@@ -127,8 +147,13 @@ async function showList(page) {
 }
 
 async function showArticle(articleId) {
+  leaveError();
   loadingIcon.style.display = "flex";
   let article = await getArticleWithContent(articleId);
+  if (article === undefined) {
+    errorHandler("404");
+    return;
+  }
   let titleText = document.getElementsByClassName("title-text")[0];
   let articleText = document.getElementsByClassName("article")[0];
   let colorfulLine = document.getElementById("article-color-line");
