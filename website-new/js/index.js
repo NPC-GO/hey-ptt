@@ -35,7 +35,9 @@ function request(url, method, parameters, ...header) {
     let httpRequest = new XMLHttpRequest();
     header.forEach(h => httpRequest.setRequestHeader(h.key, h.value));
     if (method === "GET") {
-      url += ("?" + parameters);
+      if (parameters) {
+        url += ("?" + parameters || "");
+      }
       parameters = null;
     }
     httpRequest.open(method, url);
