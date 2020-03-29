@@ -132,3 +132,12 @@ table {
     overscroll-behavior: contain;
     -ms-scroll-chaining: none;
 }
+
+img {
+    display: inline-block;
+    max-width: 95%;
+    position: relative;
+    margin: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}

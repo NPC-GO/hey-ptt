@@ -6,8 +6,9 @@ app = Flask(__name__, static_folder='website-new', static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 
-def render_content(data):
+def render_img_content(data: dict) -> dict:
     content = data["content"]
+
     img_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg)", content)
     for img_link in img_links:
         pos = content.find(img_link)
@@ -15,6 +16,11 @@ def render_content(data):
         content = content[:pos] + new + content[pos + len(img_link):]
     content = "<br />".join(content.split("\n"))
     data["content"] = content
+    return data
+
+
+def render_https_content(data: dict) -> dict:
+    data["content"].replace("http", "https")
     return data
 
 
@@ -33,7 +39,7 @@ def article_info(article_id):
 def article_content(article_id):
     board = request.args.get('board')
     raw_data = cra.get_article(article_id, board, is_include_content=True)
-    return render_content(raw_data)
+    return render_https_content(render_img_content(raw_data))
 
 
 @app.route('/api/articles', methods=['GET'])
