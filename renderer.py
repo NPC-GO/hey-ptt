@@ -14,7 +14,7 @@ def render_img_content(data: dict) -> dict:
         pos = content.find(img_link)
         new = "<img alt src='{}'>".format(img_link)
         content = content[:pos] + new + content[pos + len(img_link):]
-    content = "<br />".join(content.split("\n"))
+    content = "<br>".join(content.split("\n"))
     data["content"] = content
     return data
 
