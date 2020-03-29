@@ -9,7 +9,6 @@ def render(data: dict) -> dict:
 
 def render_img_content(data: dict) -> dict:
     content = data["content"]
-    # imgur_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg|gif)", content)
     img_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg|gif)", content)
     for img_link in img_links:
         pos = content.find(img_link)
