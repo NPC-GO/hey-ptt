@@ -214,9 +214,9 @@ async function showArticle(articleId, board) {
   colorfulLine.style.display = "none";
   titleText.innerText = "";
   articleText.innerText = "";
-  setTimeout(function () {
+  setTimeout(() => {
     titleText.innerText = article["title"];
-    articleText.innerText = article["content"];
+    articleText.innerHTML = article["content"];
     colorfulLine.style.display = "inherit"
   }, 600);
   let articleContainer = document.getElementById("article-container");
