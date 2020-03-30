@@ -44,13 +44,6 @@ def get_article(id_, board="Gossiping", is_include_content=False) -> dict:
 
     # 如果 is_include_content 為 True 及為需要取得內容
     if is_include_content is True:
-        # print(content)
-        # div = content.find_all('div')
-        #
-        # # 刪除不需要的資訊
-        # for i in range(len(div) - 1):
-        #     div[i + 1].clear()
-        print(content)
         articles.update(dict(content='<br>'.join(str(content).split("\n"))))
 
     return articles
