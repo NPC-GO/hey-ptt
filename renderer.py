@@ -2,8 +2,8 @@ import re
 
 
 def render(data: dict) -> dict:
-    r = render_img_content(data)
-    r = render_https_content(r)
+    # r = render_img_content(data)
+    r = render_https_content(data)
     return r
 
 
