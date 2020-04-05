@@ -133,11 +133,14 @@ table {
     -ms-scroll-chaining: none;
 }
 
-img {
+img, video {
     display: inline-block;
+    animation-name: animateTop;
+    animation-duration: 0.5s;
     max-width: 95%;
     position: relative;
     margin: auto;
+    transition: 0.1s;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -152,4 +155,13 @@ iframe[class~="youtube-player"] {
     height: 40vw;
     max-width: 720px;
     max-height: 405px;
+}
+
+@keyframes animateShow {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
 }

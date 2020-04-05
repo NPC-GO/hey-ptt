@@ -228,7 +228,6 @@ async function showArticle(articleId, board) {
 async function loadImages() {
   await new Promise(resolve => setTimeout(() => resolve(), 800));
   let content = document.getElementById("main-content");
-  console.log(content);
   let richContents = content.getElementsByTagName("blockquote");
   for (const richContent of richContents) {
     let id = richContent.getAttribute("data-id");
@@ -236,8 +235,17 @@ async function loadImages() {
     let imgUrl = "https://api.imgur.com/3/image/" + id;
     let response = await request(imgUrl, "GET", null, {
       "Authorization": `Client-ID ${clientId}`
-    });
-    console.log(response);
+    }).catch((e) => errorHandler(e)) || "";
+    if (response.data.link && response.data.type) {
+      let media;
+      if (response.data.type.slice(0, 5) === "image") {
+        media = document.createElement("img");
+
+      } else if (response.data.type.slice(0, 5) === "video") {
+        media = document.createElement("video");
+      }
+      media.setAttribute("src", response.data.link);
+      richContent.parentNode.insertBefore(media, richContents.nextSibling);
+    }
   }
-  console.log(richContents);
 }
