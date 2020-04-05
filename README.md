@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://ptt.npc-go.com" target="_blank">
-    <img alt="Hey_Ptt_Logo Logo" width="80%" src="https://i.imgur.com/dLHhTGV.png">
+    <img alt="Hey_Ptt_Logo Logo" width="256px" src="https://i.imgur.com/dLHhTGV.png">
   </a>
 </p>
 
@@ -16,6 +16,7 @@
     - Flask
     - Crawler
 - [LiWei](https://github.com/txya900619)
-    - Flask 
+    - Flask
+    - Crawler
 - [Entroy](https://github.com/entroy0421)
     - Crawler
