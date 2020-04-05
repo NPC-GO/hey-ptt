@@ -7,6 +7,7 @@ def render(data: dict) -> dict:
     return r
 
 
+# (?:http:|https:)?\/\/(?:imagr.com).(.......)
 def render_img_content(data: dict) -> dict:
     content = data["content"]
     img_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg|gif)", content)

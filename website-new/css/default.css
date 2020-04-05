@@ -141,3 +141,15 @@ img {
     left: 50%;
     transform: translateX(-50%);
 }
+
+iframe[class~="youtube-player"] {
+    margin: 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    width: 95%;
+    height: 40vw;
+    max-width: 720px;
+    max-height: 405px;
+}
