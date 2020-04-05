@@ -302,3 +302,27 @@ html, body {
     color: white;
     margin-bottom: 10px;
 }
+
+div[class="push"] {
+    background-color: rgb(247, 241, 228);
+    border-radius: 10px;
+    margin: 10px 10px;
+    padding: 10px;
+}
+
+span[class~="push-tag"], span[class~="push-userid"] {
+    font-weight: 600;
+}
+
+span[class~="push-userid"] {
+    color: #800000;
+}
+
+span[class~="push-content"] {
+    color: rgb(75, 51, 32);
+}
+
+span[class~="push-ipdatetime"] {
+    color: #aaaaaa;
+    font-size: smaller;
+}

@@ -245,6 +245,8 @@ async function loadImages() {
         media = document.createElement("video");
       }
       media.setAttribute("src", response.data.link);
+      media.setAttribute("loading", "lazy");
+      media.setAttribute("alt", "failed to load this image.");
       richContent.parentNode.insertBefore(media, richContents.nextSibling);
     }
   }
