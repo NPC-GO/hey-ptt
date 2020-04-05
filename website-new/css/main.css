@@ -67,11 +67,14 @@ html, body {
     margin: 10px;
     border-radius: 10px;
     padding: 5px;
+    position: relative;
     cursor: pointer;
     transition: 0.5s;
     border-style: solid;
     border-width: medium;
     border-color: #003377;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #list .article-card:hover {
@@ -93,6 +96,8 @@ html, body {
 #list .article-card-title {
     font-size: large;
     color: #003377;
+    text-overflow: ellipsis;
+    position: relative;
     font-weight: bold;
     line-height: normal;
     transition: 0.3s;
