@@ -133,7 +133,7 @@ table {
     -ms-scroll-chaining: none;
 }
 
-img[class="media"], video[class="media"] {
+img[class="media"], video[class="media"], div[class="richcontent"] > img, div[class="richcontent"] > video {
     display: inline-block;
     animation-name: animateTop;
     animation-duration: 0.5s;
@@ -159,9 +159,9 @@ iframe[class~="youtube-player"] {
 
 @keyframes animateShow {
     from {
-        opacity: 0
+        display: none;
     }
     to {
-        opacity: 1
+        display: inline-block;
     }
 }
