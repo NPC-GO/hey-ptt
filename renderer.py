@@ -1,21 +1,33 @@
 import re
+from bs4 import BeautifulSoup as b
 
 
 def render(data: dict) -> dict:
-    r = render_img_content(data)
+    # r = render_img_content(data)
+    r = email_protected(data)
     r = render_https_content(r)
     return r
 
 
-def render_img_content(data: dict) -> dict:
-    content = data["content"]
-    img_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg|gif)", content)
-    for img_link in img_links:
-        pos = content.find(img_link)
-        new = "<img alt src='{}'>".format(img_link)
-        content = content[:pos] + new + content[pos + len(img_link):]
-    content = "<br>".join(content.split("\n"))
-    data["content"] = content
+# (?:http:|https:)?\/\/(?:imgur.com).(.......)
+# def render_img_content(data: dict) -> dict:
+#     content = data["content"]
+#     soup = b(content, 'html.parser')
+#     blockquote = soup.find_all('blockquote')
+#     for x in blockquote:
+#         print(x.get("data-id"))
+#     data["content"] = content
+#     return data
+
+def email_protected(data: dict) -> dict:
+    if "__cf_email__" in data["content"]:
+        content = data["content"]
+        soup = b(content, 'html.parser')
+        protected_emails = soup.find_all("a", class_="__cf_email__")
+        for protected_email in protected_emails:
+            protected_email.name = "span"
+            protected_email.string = ""
+        data["content"] = str(soup)
     return data
 
 
