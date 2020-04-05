@@ -133,7 +133,7 @@ table {
     -ms-scroll-chaining: none;
 }
 
-img, video {
+img[class="media"], video[class="media"] {
     display: inline-block;
     animation-name: animateTop;
     animation-duration: 0.5s;

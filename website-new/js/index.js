@@ -244,6 +244,7 @@ async function loadImages() {
       } else if (response.data.type.slice(0, 5) === "video") {
         media = document.createElement("video");
       }
+      media.classList.add("media");
       media.setAttribute("src", response.data.link);
       media.setAttribute("loading", "lazy");
       media.setAttribute("alt", "failed to load this image.");

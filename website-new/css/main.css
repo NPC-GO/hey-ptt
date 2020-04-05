@@ -235,11 +235,21 @@ html, body {
     width: 100%;
     bottom: 0;
     height: 15px;
-    background-color: darkgrey;
+    background-color: rgb(36, 41, 46);
     color: white;
     padding: 5px;
     text-align: center;
     font-size: small;
+}
+
+#footer > span > img {
+    position: relative;
+    height: 100%;
+    margin: 0 5px;
+}
+
+#footer > a:link {
+    color: #aaaaaa;
 }
 
 .progress-bar-container {
