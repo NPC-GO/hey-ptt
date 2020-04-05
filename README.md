@@ -1,4 +1,4 @@
-# hey-ppt
+# Hey-PTT
 
 <p align="center">
   <a href="https://ptt.npc-go.com" target="_blank">
