@@ -70,17 +70,17 @@ html, body {
     position: relative;
     cursor: pointer;
     transition: 0.5s;
-    border-style: solid;
-    border-width: medium;
-    border-color: #003377;
     overflow: hidden;
     text-overflow: ellipsis;
+    -webkit-box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
+    box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
 }
 
 #list .article-card:hover {
-    box-shadow: 5px 5px 7px #000000;
     border-color: #00aaaa;
-    transform: scale(1.1);
+    border-style: outset;
+    border-width: thick;
 }
 
 #list .article-card:active {
