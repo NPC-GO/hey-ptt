@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="npc-class-hey-ptt",
-    version="1.3",
+    version="1.4",
     author="NPC-GO team.",
     author_email="npc.designer@gmail.com",
     description="NPC.GO Team 2020 web club class project",
