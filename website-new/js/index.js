@@ -38,7 +38,6 @@ let loadingIconChildren = loadingIcon.children;
 function request(url, method, parameters, ...header) {
   return new Promise(function (resolve, reject) {
     let httpRequest = new XMLHttpRequest();
-    header.forEach(h => httpRequest.setRequestHeader(h.key, h.value));
     if (method === "GET") {
       if (parameters) {
         url += ("?" + parameters || "");
@@ -46,6 +45,7 @@ function request(url, method, parameters, ...header) {
       parameters = null;
     }
     httpRequest.open(method, url);
+    header.forEach(h => httpRequest.setRequestHeader(Object.keys(h)[0], Object.values(h)[0].toString()));
     httpRequest.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 200) {
@@ -222,4 +222,22 @@ async function showArticle(articleId, board) {
   let articleContainer = document.getElementById("article-container");
   articleContainer.style.display = "block";
   loadingIcon.style.display = "none";
+  await loadImages();
+}
+
+async function loadImages() {
+  await new Promise(resolve => setTimeout(() => resolve(), 800));
+  let content = document.getElementById("main-content");
+  console.log(content);
+  let richContents = content.getElementsByTagName("blockquote");
+  for (const richContent of richContents) {
+    let id = richContent.getAttribute("data-id");
+    let clientId = "9328a3cd4a074e4";
+    let imgUrl = "https://api.imgur.com/3/image/" + id;
+    let response = await request(imgUrl, "GET", null, {
+      "Authorization": `Client-ID ${clientId}`
+    });
+    console.log(response);
+  }
+  console.log(richContents);
 }

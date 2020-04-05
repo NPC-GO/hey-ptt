@@ -1,4 +1,5 @@
 import re
+# from bs4 import BeautifulSoup as b
 
 
 def render(data: dict) -> dict:
@@ -7,17 +8,15 @@ def render(data: dict) -> dict:
     return r
 
 
-# (?:http:|https:)?\/\/(?:imagr.com).(.......)
-def render_img_content(data: dict) -> dict:
-    content = data["content"]
-    img_links = re.findall(r"(?:http:|https:)?//.*\.(?:png|jpg|gif)", content)
-    for img_link in img_links:
-        pos = content.find(img_link)
-        new = "<img alt src='{}'>".format(img_link)
-        content = content[:pos] + new + content[pos + len(img_link):]
-    content = "<br>".join(content.split("\n"))
-    data["content"] = content
-    return data
+# (?:http:|https:)?\/\/(?:imgur.com).(.......)
+# def render_img_content(data: dict) -> dict:
+#     content = data["content"]
+#     soup = b(content, 'html.parser')
+#     blockquote = soup.find_all('blockquote')
+#     for x in blockquote:
+#         print(x.get("data-id"))
+#     data["content"] = content
+#     return data
 
 
 def render_https_content(data: dict) -> dict:
