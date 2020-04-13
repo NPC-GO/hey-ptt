@@ -3,11 +3,9 @@
 
 @keyframes animateTop {
     from {
-        top: -1000px;
         opacity: 0
     }
     to {
-        top: 0;
         opacity: 1
     }
 }
@@ -64,23 +62,23 @@ html, body {
 
 #list .article-card {
     width: 250px;
-    margin: 10px;
+    margin: 6px;
     border-radius: 10px;
     padding: 5px;
     position: relative;
     cursor: pointer;
-    transition: 0.5s;
+    transition: 0.2s;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
-    -moz-box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
-    box-shadow: 8px 7px 15px 0 rgba(0, 0, 0, 0.38);
+    -webkit-box-shadow: 8px 7px 8px 0 rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 8px 7px 8px 0 rgba(0, 0, 0, 0.38);
+    box-shadow: 8px 7px 8px 0 rgba(0, 0, 0, 0.38);
 }
 
 #list .article-card:hover {
     border-color: #00aaaa;
-    border-style: outset;
-    border-width: thick;
+    border-style: solid;
+    border-width: medium;
 }
 
 #list .article-card:active {
@@ -335,4 +333,42 @@ span[class~="push-content"] {
 span[class~="push-ipdatetime"] {
     color: #aaaaaa;
     font-size: smaller;
+}
+
+div [class*="article-meta"] {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #E0ECF8;
+    border-radius: 10px;
+    font-size: small;
+    color: #819FF7;
+}
+
+div [class="article-meta-tag"] {
+    font-weight: bold;
+    color: #0000FF;
+}
+
+img[class="media"], video[class="media"], div[class="richcontent"] > img, div[class="richcontent"] > video {
+    display: inline-block;
+    animation-name: animateTop;
+    animation-duration: 0.5s;
+    max-width: 95%;
+    position: relative;
+    margin: auto;
+    transition: 0.1s;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+iframe[class~="youtube-player"] {
+    margin: 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    width: 95%;
+    height: 40vw;
+    max-width: 720px;
+    max-height: 405px;
 }

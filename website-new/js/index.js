@@ -61,7 +61,7 @@ function request(url, method, parameters, ...header) {
 
 function getCookie(name) {
   let cookieArr = document.cookie.split(";");
-  for (let i of cookieArr) {
+  for (const i of cookieArr) {
     let cookiePair = i.split("=");
     if (name === cookiePair[0].trim()) {
       return decodeURIComponent(cookiePair[1]);

@@ -133,29 +133,7 @@ table {
     -ms-scroll-chaining: none;
 }
 
-img[class="media"], video[class="media"], div[class="richcontent"] > img, div[class="richcontent"] > video {
-    display: inline-block;
-    animation-name: animateTop;
-    animation-duration: 0.5s;
-    max-width: 95%;
-    position: relative;
-    margin: auto;
-    transition: 0.1s;
-    left: 50%;
-    transform: translateX(-50%);
-}
 
-iframe[class~="youtube-player"] {
-    margin: 0;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    width: 95%;
-    height: 40vw;
-    max-width: 720px;
-    max-height: 405px;
-}
 
 @keyframes animateShow {
     from {
