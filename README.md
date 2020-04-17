@@ -13,7 +13,7 @@
 - [Xanonymous](https://github.com/Xanonymous-GitHub)
     - **Project Manager**.
     - Front-end.
-    - Flask
+    - Flask.
     - Crawler
 - [LiWei](https://github.com/txya900619)
     - Flask
