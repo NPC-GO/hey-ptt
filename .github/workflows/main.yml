@@ -26,4 +26,3 @@ jobs:
             echo "$PUBKEY" > ./certs/server.pub
             echo "$PRIKEY" > ./certs/server.key
             bash ./deploy.sh
-            exit

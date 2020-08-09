@@ -37,4 +37,4 @@ def get_boards():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=443, debug=False)
