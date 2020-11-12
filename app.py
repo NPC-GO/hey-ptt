@@ -2,7 +2,7 @@ from flask import Flask, request
 import crawler as cra
 from renderer import render
 
-app = Flask(__name__, static_folder='website-new', static_url_path='')
+app = Flask(__name__, static_folder='website', static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 

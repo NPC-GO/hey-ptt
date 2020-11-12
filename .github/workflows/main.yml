@@ -22,7 +22,17 @@ jobs:
           envs: PUBKEY,PRIKEY
           script_stop: true
           script: |
-            wget https://raw.githubusercontent.com/NPC-GO/hey-ptt/master/deploy.sh -O deploy.sh
-            echo "$PUBKEY" > ./certs/server.pub
-            echo "$PRIKEY" > ./certs/server.key
-            bash ./deploy.sh
+            sudo pm2 kill
+            sudo pkill flask || echo 'killed'
+            sudo rm -rf ./hey-ptt
+            git clone https://github.com/NPC-GO/hey-ptt.git
+            cd hey-ptt || exit
+            sudo rm -rf ./git
+            pip3 install -r requirements.txt
+            export FLASK_APP=app.py
+            mkdir certs
+            touch ./certs/server.pub
+            touch ./certs/server.key
+            echo "$PUBKEY" >> ./certs/server.pub
+            echo "$PRIKEY" >> ./certs/server.key
+            pm2 start -i max
