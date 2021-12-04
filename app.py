@@ -35,6 +35,5 @@ def article_ids():
 def get_boards():
     return cra.get_popular_boards()
 
-
 if __name__ == '__main__':
-    app.run(port=443, debug=False)
+    app.run()

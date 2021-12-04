@@ -1,38 +1,19 @@
-name: deply to server
+name: SonarQube
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+
 jobs:
-  deploy:
-    name: deploy
+  build:
+    name: Scan
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        env:
-          PUBKEY: ${{ secrets.SSL_CERT }}
-          PRIKEY: ${{ secrets.SSL_KEY }}
+      - uses: actions/checkout@v2
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          envs: PUBKEY,PRIKEY
-          script_stop: true
-          script: |
-            sudo pm2 kill
-            sudo pkill flask || echo 'killed'
-            sudo rm -rf ./hey-ptt
-            git clone https://github.com/NPC-GO/hey-ptt.git
-            cd hey-ptt || exit
-            sudo rm -rf ./git
-            pip3 install -r requirements.txt
-            export FLASK_APP=app.py
-            mkdir certs
-            touch ./certs/server.pub
-            touch ./certs/server.key
-            echo "$PUBKEY" >> ./certs/server.pub
-            echo "$PRIKEY" >> ./certs/server.key
-            pm2 start -i max
+          fetch-depth: 0
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
