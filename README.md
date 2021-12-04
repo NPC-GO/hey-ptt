@@ -5,7 +5,7 @@
 </p>
 <h1 align="center">Hey-PTT</h1>
 
-![deply to server](https://github.com/NPC-GO/hey-ptt/workflows/deply%20to%20server/badge.svg)
+[![SonarQube](https://github.com/NPC-GO/hey-ptt/actions/workflows/main.yml/badge.svg)](https://github.com/NPC-GO/hey-ptt/actions/workflows/main.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/npc-go/hey-ptt/badge)](https://www.codefactor.io/repository/github/npc-go/hey-ptt)
 
 [Try it Now!](https://ptt.xcc.tw)
