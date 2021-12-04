@@ -1,21 +1,32 @@
+"use strict";
+
 let currentBoard = getCookie("board") || "Gossiping";
 let prevPage, boards;
-let loadMoreButton = document.getElementById("load-more-button");
-let loadingIcon = document.getElementById("loading-icon");
-let loadingIconChildren = loadingIcon.children;
+const loadMoreButton = document.getElementById("load-more-button");
+const loadingIcon = document.getElementById("loading-icon");
+const loadingIconChildren = loadingIcon.children;
+
+const getRandomIntInclusive = (min, max) => {
+  const randomBuffer = new Uint32Array(1);
+  window.crypto.getRandomValues(randomBuffer);
+  const randomNumber = randomBuffer[0] / (0xffffffff + 1);
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(randomNumber * (max - min + 1)) + min;
+};
 
 (async function () {
   loadMoreButton.addEventListener("click", async () => {
     await showList(prevPage);
   });
 
-  let articleContainer = document.getElementById("article-container");
+  const articleContainer = document.getElementById("article-container");
 
   function close() {
     articleContainer.style.display = "none";
   }
 
-  let closeArticle = document.getElementById("close-article");
+  const closeArticle = document.getElementById("close-article");
   closeArticle.addEventListener("click", close);
   onclick = (e) => {
     if (e.target === articleContainer) {
@@ -23,11 +34,11 @@ let loadingIconChildren = loadingIcon.children;
     }
   };
 
-  let boardsSelectBox = document.getElementById("boards");
+  const boardsSelectBox = document.getElementById("boards");
   boardsSelectBox.addEventListener("change", changeBoard);
 
-  let colorBars = document.querySelectorAll(".colorful-line");
-  const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+  const colorBars = document.querySelectorAll(".colorful-line");
+  const randomColor = () => Math.floor(getRandomIntInclusive(0, 9999) * 1677.7215).toString(16);
   colorBars.forEach((coloBar) => {
     coloBar.style.background = "linear-gradient(to top right," + "#" + randomColor() + "," + "#" + randomColor() + ")";
   });
@@ -37,7 +48,7 @@ let loadingIconChildren = loadingIcon.children;
 
 function request(url, method, parameters, ...header) {
   return new Promise(function (resolve, reject) {
-    let httpRequest = new XMLHttpRequest();
+    const httpRequest = new XMLHttpRequest();
     if (method === "GET") {
       if (parameters) {
         url += ("?" + parameters || "");
@@ -60,7 +71,7 @@ function request(url, method, parameters, ...header) {
 }
 
 function getCookie(name) {
-  let cookieArr = document.cookie.split(";");
+  const cookieArr = document.cookie.split(";");
   for (const i of cookieArr) {
     let cookiePair = i.split("=");
     if (name === cookiePair[0].trim()) {
@@ -93,13 +104,13 @@ async function getArticleTitle(articleId, board) {
 }
 
 async function getList(page, board) {
-  let list = await request("/api/articles", "GET", `page=${page || ""}&board=${board || currentBoard}`)
+  const list = await request("/api/articles", "GET", `page=${page || ""}&board=${board || currentBoard}`)
     .catch((e) => errorHandler(e));
   return [list["articles"] || [], list["prev"] || []];
 }
 
 async function getBoards() {
-  let boards = await request("/api/boards", "GET")
+  const boards = await request("/api/boards", "GET")
     .catch((e) => errorHandler(e));
   return boards["boards"] || {boards: "Gossiping"};
 }
@@ -108,13 +119,13 @@ async function showBoardsSelectorOptions() {
   leaveError();
   loadingIcon.style.display = "flex";
   boards = await getBoards();
-  let boardsSelectBox = document.getElementById("boards");
+  const boardsSelectBox = document.getElementById("boards");
   boards.forEach(board => {
-    let option = document.createElement("option");
+    const option = document.createElement("option");
     option.text = board;
     boardsSelectBox.add(option);
   });
-  let inferredBoardIndex = getCookie("board-index") || 0;
+  const inferredBoardIndex = getCookie("board-index") || 0;
   if (boardsSelectBox[inferredBoardIndex] !== currentBoard) {
     boardsSelectBox.selectedIndex = boards.findIndex(board => board === currentBoard);
   } else {
@@ -124,7 +135,7 @@ async function showBoardsSelectorOptions() {
 }
 
 async function changeBoard() {
-  let listContainer = document.getElementById("list");
+  const listContainer = document.getElementById("list");
   listContainer.innerHTML = "";
   currentBoard = boards[this.selectedIndex];
   await showList("", currentBoard);
@@ -140,14 +151,14 @@ async function showList(page, board) {
   loadMoreButton.textContent = "載入中...";
   let list;
   [list, prevPage] = await getList(page, board);
-  let listContainer = document.getElementById("list");
-  let progressBar = document.getElementsByClassName("progress-bar")[0];
-  let partOfProgress = 100 / list.length;
+  const listContainer = document.getElementById("list");
+  const progressBar = document.getElementsByClassName("progress-bar")[0];
+  const partOfProgress = 100 / list.length;
   let progressBarStatus = 0;
   progressBar.parentNode.style.display = "flex";
   progressBar.style.width = "0";
   (await Promise.all(list.map(async (articleId) => {
-    let cardData = await getArticleTitle(articleId, board).catch(e => ({
+    const cardData = await getArticleTitle(articleId, board).catch(e => ({
       title: "無法載入文章",
       time: e,
       author: "",
@@ -165,12 +176,12 @@ async function showList(page, board) {
     };
   }))).forEach(({time, author, title, id, disabled}) => {
     if (!disabled) {
-      let card = document.createElement("div");
-      let cardInfo = document.createElement("div");
-      let cardTitle = document.createElement("p");
-      let cardAuthor = document.createElement("p");
-      let cardTime = document.createElement("p");
-      let hr = document.createElement("hr");
+      const card = document.createElement("div");
+      const cardInfo = document.createElement("div");
+      const cardTitle = document.createElement("p");
+      const cardAuthor = document.createElement("p");
+      const cardTime = document.createElement("p");
+      const hr = document.createElement("hr");
       card.className += "article-card";
       cardInfo.className += "article-card-info";
       cardTitle.className += "article-card-title";
@@ -203,14 +214,14 @@ async function showList(page, board) {
 async function showArticle(articleId, board) {
   leaveError();
   loadingIcon.style.display = "flex";
-  let article = await getArticleWithContent(articleId, board);
+  const article = await getArticleWithContent(articleId, board);
   if (article === undefined) {
     errorHandler("404");
     return;
   }
-  let titleText = document.getElementsByClassName("title-text")[0];
-  let articleText = document.getElementsByClassName("article")[0];
-  let colorfulLine = document.getElementById("article-color-line");
+  const titleText = document.getElementsByClassName("title-text")[0];
+  const articleText = document.getElementsByClassName("article")[0];
+  const colorfulLine = document.getElementById("article-color-line");
   colorfulLine.style.display = "none";
   titleText.innerText = "";
   articleText.innerText = "";
@@ -219,7 +230,7 @@ async function showArticle(articleId, board) {
     articleText.innerHTML = article["content"];
     colorfulLine.style.display = "inherit"
   }, 600);
-  let articleContainer = document.getElementById("article-container");
+  const articleContainer = document.getElementById("article-container");
   articleContainer.style.display = "block";
   loadingIcon.style.display = "none";
   await loadImages();
@@ -227,13 +238,13 @@ async function showArticle(articleId, board) {
 
 async function loadImages() {
   await new Promise(resolve => setTimeout(() => resolve(), 800));
-  let content = document.getElementById("main-content");
-  let richContents = content.getElementsByTagName("blockquote");
+  const content = document.getElementById("main-content");
+  const richContents = content.getElementsByTagName("blockquote");
   for (const richContent of richContents) {
-    let id = richContent.getAttribute("data-id");
-    let clientId = "9328a3cd4a074e4";
-    let imgUrl = "https://api.imgur.com/3/image/" + id;
-    let response = await request(imgUrl, "GET", null, {
+    const id = richContent.getAttribute("data-id");
+    const clientId = "9328a3cd4a074e4";
+    const imgUrl = "https://api.imgur.com/3/image/" + id;
+    const response = await request(imgUrl, "GET", null, {
       "Authorization": `Client-ID ${clientId}`
     }).catch((e) => errorHandler(e)) || "";
     if (response.data.link && response.data.type) {

@@ -1,10 +1,14 @@
 from flask import Flask, request
 import crawler as cra
 from renderer import render
+from flask_wtf.csrf import CSRFProtect
+import os
 
 app = Flask(__name__, static_folder='website', static_url_path='')
 app.config['JSON_AS_ASCII'] = False
-
+app.config['SECRET_KEY'] = os.urandom(24)
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 @app.route('/', methods=['GET'])
 def give_html():
