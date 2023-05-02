@@ -1,0 +1,7 @@
+{
+  "extends": "@antfu",
+  "rules": {
+    "prefer-promise-reject-errors": "off",
+    "@typescript-eslint/no-invalid-this": "off"
+  }
+}

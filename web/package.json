@@ -1,0 +1,26 @@
+{
+  "name": "hey-ptt-web",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.5",
+    "eslint": "^8.39.0",
+    "lint-staged": "^13.2.2",
+    "simple-git-hooks": "^2.8.1",
+    "vite": "^4.3.4",
+    "vite-plugin-html": "^3.2.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
