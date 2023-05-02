@@ -1,10 +1,14 @@
 version: '3'
 
 services:
-  heyptt:
+  hey-ptt:
     build:
       context: .
       dockerfile: ./Dockerfile
+    image: hey-ptt
     ports:
       - '7777:7777'
+    environment:
+      - PORT=7777
+      - HOST=0.0.0.0
     restart: unless-stopped
