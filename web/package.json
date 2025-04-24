@@ -10,11 +10,11 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.16.0",
-    "eslint": "^9.1.1",
-    "lint-staged": "^15.2.2",
-    "simple-git-hooks": "^2.11.1",
-    "vite": "^5.2.10",
+    "@antfu/eslint-config": "^4.12.0",
+    "eslint": "^9.25.1",
+    "lint-staged": "^15.5.1",
+    "simple-git-hooks": "^2.13.0",
+    "vite": "^6.3.3",
     "vite-plugin-html": "^3.2.2"
   },
   "simple-git-hooks": {
@@ -22,5 +22,6 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  }
+  },
+  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
 }
